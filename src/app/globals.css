@@ -34,7 +34,6 @@
   --color-light: var(--light);
   
   /* Typography Theme */
-  --font-acid-grotesk: var(--font-acid-grotesk);
   --font-sans: var(--font-acid-grotesk);
   --font-mono: var(--font-geist-mono);
   
