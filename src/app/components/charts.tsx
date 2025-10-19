@@ -19,7 +19,7 @@ export default function Charts({ className }: { className?: string }) {
         className
       )}
     >
-      <p className="text-2xl font-normal">Top Charts</p>
+      <p className="text-2xl font-bold">Top Charts</p>
       {charts.map((chart) => (
         <ChartCard
           key={chart.id}

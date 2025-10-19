@@ -41,9 +41,9 @@ export default function ChartCard({
           className="super-rounded flex-shrink-0 group-hover/chart:rounded-xl transition-all duration-120"
         />
         <div className="flex-1 min-w-0">
-          <h3 className="text-lg font-bold text-light truncate">{title}</h3>
-          <p className="text-base text-light/50 truncate">{description}</p>
-          <p className="text-base text-light">{formatDuration(duration)}</p>
+          <h3 className="text-lg font-regular text-light truncate">{title}</h3>
+          <p className="text-sm text-light/50 truncate">{description}</p>
+          <p className="text-sm text-light mt-1">{formatDuration(duration)}</p>
         </div>
       </div>
       <Heart isLiked={isLiked} onToggle={setIsLiked} />
