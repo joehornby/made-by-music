@@ -31,6 +31,7 @@
   /* Super Rounded Borders */
   --super-ellipse-factor: 1.88;
   --super-rounded-multiplier: 3;
+  --super-rounded-fallback-multiplier: 4;
   --super-rounded-lg: calc(theme(borderRadius.2xl) * var(--super-rounded-multiplier));
   --super-rounded-xl: calc(theme(borderRadius.4xl) * var(--super-rounded-multiplier));
   --super-rounded-default: calc(theme(borderRadius.lg) * var(--super-rounded-multiplier));
@@ -127,24 +128,27 @@ body {
 
 @layer utilities {
   .super-rounded-lg {
+    border-radius: calc(theme(borderRadius.lg) * var(--super-rounded-fallback-multiplier));
     @supports (corner-shape: superellipse(var(--super-ellipse-factor))) {
       corner-shape: superellipse(var(--super-ellipse-factor));
+      border-radius: var(--super-rounded-lg);
     }
-    border-radius: calc(theme(borderRadius.2xl) * var(--super-rounded-multiplier));
   }
   .super-rounded-xl {
+    border-radius: calc(theme(borderRadius.xl) * var(--super-rounded-fallback-multiplier));
     @supports (corner-shape: superellipse(var(--super-ellipse-factor))) {
       corner-shape: superellipse(var(--super-ellipse-factor));
+      border-radius: var(--super-rounded-xl);
     }
-    border-radius: calc(theme(borderRadius.4xl) * var(--super-rounded-multiplier));
   }
 
   /* Default */
   .super-rounded {
+    border-radius: calc(theme(borderRadius.DEFAULT) * var(--super-rounded-fallback-multiplier));
     @supports (corner-shape: superellipse(var(--super-ellipse-factor))) {
       corner-shape: superellipse(var(--super-ellipse-factor));
+      border-radius: var(--super-rounded-default);
     }
-    border-radius: calc(theme(borderRadius.lg) * var(--super-rounded-multiplier));
   }
 }
 
