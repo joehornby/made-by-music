@@ -4,7 +4,10 @@ import localFont from "next/font/local";
 import "./globals.css";
 
 const acidGrotesk = localFont({
-  src: "./fonts/FFF_Acid_Grotesk_Trial_Regular.ttf",
+  src: [
+    { path: "./fonts/FFF-AcidGrotesk-Normal-TRIAL.otf", weight: "400" },
+    { path: "./fonts/FFF-AcidGrotesk-Bold-TRIAL.otf", weight: "700" },
+  ],
   variable: "--font-acid-grotesk",
 });
 
@@ -24,9 +27,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={acidGrotesk.className}>
       <body
-        className={`${acidGrotesk.variable} ${geistMono.variable} antialiased`}
+        className={`${acidGrotesk.variable} ${geistMono.variable} antialiased bg-dark text-light`}
       >
         {children}
       </body>
