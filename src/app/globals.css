@@ -160,7 +160,7 @@ body {
   }
 
   /* Global click scale effect */
-  button:active, a>div:active {
+  button:active, .active-scale:active {
     transform: scale(0.98);
     transform-origin: 50% 50% 0px;
     transition: transform 0.12s ease-out;

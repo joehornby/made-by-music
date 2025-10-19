@@ -28,21 +28,21 @@ export default function ChartCard({
   return (
     <div
       className={cn(
-        "super-rounded-xl w-full h-auto p-4 bg-dark-alt flex items-center justify-between",
+        "cursor-pointer super-rounded-xl w-full h-auto p-4 bg-dark-alt flex items-center justify-between gap-8 hover:bg-light/5 text-left group/chart active-scale",
         className
       )}
     >
-      <div className="flex items-start gap-4">
+      <div className="flex items-start gap-4 flex-1 min-w-0">
         <Image
           src={imageUrl}
           alt="Chart"
           width={64}
           height={64}
-          className="super-rounded"
+          className="super-rounded flex-shrink-0 group-hover/chart:rounded-xl transition-all duration-120"
         />
-        <div>
-          <h3 className="text-lg font-bold text-light">{title}</h3>
-          <p className="text-base text-light/50">{description}</p>
+        <div className="flex-1 min-w-0">
+          <h3 className="text-lg font-bold text-light truncate">{title}</h3>
+          <p className="text-base text-light/50 truncate">{description}</p>
           <p className="text-base text-light">{formatDuration(duration)}</p>
         </div>
       </div>
