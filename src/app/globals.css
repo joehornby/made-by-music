@@ -32,6 +32,7 @@
   --super-ellipse-factor: 1.88;
   --super-rounded-multiplier: 3;
   --super-rounded-fallback-multiplier: 4;
+  --super-rounded-sm: calc(theme(borderRadius.sm) * var(--super-rounded-multiplier));
   --super-rounded-lg: calc(theme(borderRadius.2xl) * var(--super-rounded-multiplier));
   --super-rounded-xl: calc(theme(borderRadius.4xl) * var(--super-rounded-multiplier));
   --super-rounded-default: calc(theme(borderRadius.lg) * var(--super-rounded-multiplier));
@@ -127,6 +128,13 @@ body {
 }
 
 @layer utilities {
+  .super-rounded-sm {
+    border-radius: calc(theme(borderRadius.sm) * var(--super-rounded-fallback-multiplier));
+    @supports (corner-shape: superellipse(var(--super-ellipse-factor))) {
+      corner-shape: superellipse(var(--super-ellipse-factor));
+      border-radius: var(--super-rounded-sm);
+    }
+  }
   .super-rounded-lg {
     border-radius: calc(theme(borderRadius.lg) * var(--super-rounded-fallback-multiplier));
     @supports (corner-shape: superellipse(var(--super-ellipse-factor))) {
@@ -149,6 +157,59 @@ body {
       corner-shape: superellipse(var(--super-ellipse-factor));
       border-radius: var(--super-rounded-default);
     }
+  }
+
+  /* Global click scale effect */
+  button:active, a>div:active {
+    transform: scale(0.98);
+    transform-origin: 50% 50% 0px;
+    transition: transform 0.12s ease-out;
+  }
+
+  /* Non-linear dark gradient fade utilities */
+  .gradient-fade-r {
+    background: linear-gradient(to right,
+      var(--dark) 0%,
+      color-mix(in srgb, var(--dark) 73.8%, transparent) 19%,
+      color-mix(in srgb, var(--dark) 54.1%, transparent) 34%,
+      color-mix(in srgb, var(--dark) 38.2%, transparent) 47%,
+      color-mix(in srgb, var(--dark) 27.8%, transparent) 56.5%,
+      color-mix(in srgb, var(--dark) 19.4%, transparent) 65%,
+      color-mix(in srgb, var(--dark) 12.6%, transparent) 73%,
+      color-mix(in srgb, var(--dark) 7.5%, transparent) 80.2%,
+      color-mix(in srgb, var(--dark) 4.2%, transparent) 86.1%,
+      color-mix(in srgb, var(--dark) 2.1%, transparent) 91%,
+      color-mix(in srgb, var(--dark) 0.8%, transparent) 95.2%,
+      color-mix(in srgb, var(--dark) 0.2%, transparent) 98.2%,
+      transparent 100%
+    );
+  }
+
+  .gradient-fade-l {
+    background: linear-gradient(to left,
+      var(--dark) 0%,
+      color-mix(in srgb, var(--dark) 73.8%, transparent) 19%,
+      color-mix(in srgb, var(--dark) 54.1%, transparent) 34%,
+      color-mix(in srgb, var(--dark) 38.2%, transparent) 47%,
+      color-mix(in srgb, var(--dark) 27.8%, transparent) 56.5%,
+      color-mix(in srgb, var(--dark) 19.4%, transparent) 65%,
+      color-mix(in srgb, var(--dark) 12.6%, transparent) 73%,
+      color-mix(in srgb, var(--dark) 7.5%, transparent) 80.2%,
+      color-mix(in srgb, var(--dark) 4.2%, transparent) 86.1%,
+      color-mix(in srgb, var(--dark) 2.1%, transparent) 91%,
+      color-mix(in srgb, var(--dark) 0.8%, transparent) 95.2%,
+      color-mix(in srgb, var(--dark) 0.2%, transparent) 98.2%,
+      transparent 100%
+    );
+  }
+
+  /* Hide scrollbar utility */
+  .scrollbar-hide {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;  /* Chrome, Safari and Opera */
   }
 }
 
