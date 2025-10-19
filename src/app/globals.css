@@ -24,6 +24,14 @@
   /* Font Weights */
   --font-normal: 400;
   --font-bold: 700;
+
+  /* Super Rounded Borders */
+  --super-ellipse-factor: 1.88;
+  --super-rounded-multiplier: 3;
+  --super-rounded-lg: calc(theme(borderRadius.2xl) * var(--super-rounded-multiplier));
+  --super-rounded-xl: calc(theme(borderRadius.4xl) * var(--super-rounded-multiplier));
+  --super-rounded-default: calc(theme(borderRadius.lg) * var(--super-rounded-multiplier));
+
 }
 
 @theme inline {
@@ -48,4 +56,27 @@ body {
   background: var(--dark);
   color: var(--light);
   font-family: var(--font-acid-grotesk);
+}
+
+@layer utilities {
+  .super-rounded-lg {
+    @supports (corner-shape: superellipse(var(--super-ellipse-factor))) {
+      corner-shape: superellipse(var(--super-ellipse-factor));
+    }
+    border-radius: calc(theme(borderRadius.2xl) * var(--super-rounded-multiplier));
+  }
+  .super-rounded-xl {
+    @supports (corner-shape: superellipse(var(--super-ellipse-factor))) {
+      corner-shape: superellipse(var(--super-ellipse-factor));
+    }
+    border-radius: calc(theme(borderRadius.4xl) * var(--super-rounded-multiplier));
+  }
+
+  /* Default */
+  .super-rounded {
+    @supports (corner-shape: superellipse(var(--super-ellipse-factor))) {
+      corner-shape: superellipse(var(--super-ellipse-factor));
+    }
+    border-radius: calc(theme(borderRadius.lg) * var(--super-rounded-multiplier));
+  }
 }
