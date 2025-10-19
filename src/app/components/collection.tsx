@@ -41,7 +41,7 @@ export default function Collection({
   return (
     <div
       className={cn(
-        "w-full flex flex-col gap-5 items-start justify-start mt-12 ",
+        "w-full flex flex-col gap-5 items-start justify-start",
         className
       )}
     >
