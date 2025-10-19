@@ -2,10 +2,10 @@
 
 :root {
   /* Color Variables from Figma */
-  --dark: #1D2123;
-  --dark-alt: #1A1E1F;
-  --secondary: #FACD66;
-  --light: #EFEEE0;
+  --dark: oklch(24.448% 0.00705 229.312);
+  --dark-alt: oklch(23.129% 0.0063 214.626);
+  --accent: oklch(86.771% 0.131 85.803);
+  --light: oklch(94.609% 0.01848 103.507);
   
   /* Font Size Variables */
   --text-xs: 10px;
