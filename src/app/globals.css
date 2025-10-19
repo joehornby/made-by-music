@@ -163,12 +163,31 @@ body {
   button:active, .active-scale:active {
     transform: scale(0.98);
     transform-origin: 50% 50% 0px;
-    transition: transform 0.12s ease-out;
+    transition: transform 0.03s ease-out;
   }
 
   /* Non-linear dark gradient fade utilities */
+  .gradient-fade {
+    background: linear-gradient(var(--gradient-direction, to right),
+      var(--dark) 0%,
+      color-mix(in srgb, var(--dark) 73.8%, transparent) 19%,
+      color-mix(in srgb, var(--dark) 54.1%, transparent) 34%,
+      color-mix(in srgb, var(--dark) 38.2%, transparent) 47%,
+      color-mix(in srgb, var(--dark) 27.8%, transparent) 56.5%,
+      color-mix(in srgb, var(--dark) 19.4%, transparent) 65%,
+      color-mix(in srgb, var(--dark) 12.6%, transparent) 73%,
+      color-mix(in srgb, var(--dark) 7.5%, transparent) 80.2%,
+      color-mix(in srgb, var(--dark) 4.2%, transparent) 86.1%,
+      color-mix(in srgb, var(--dark) 2.1%, transparent) 91%,
+      color-mix(in srgb, var(--dark) 0.8%, transparent) 95.2%,
+      color-mix(in srgb, var(--dark) 0.2%, transparent) 98.2%,
+      transparent 100%
+    );
+  }
+
   .gradient-fade-r {
-    background: linear-gradient(to right,
+    --gradient-direction: to right;
+    background: linear-gradient(var(--gradient-direction),
       var(--dark) 0%,
       color-mix(in srgb, var(--dark) 73.8%, transparent) 19%,
       color-mix(in srgb, var(--dark) 54.1%, transparent) 34%,
@@ -186,7 +205,8 @@ body {
   }
 
   .gradient-fade-l {
-    background: linear-gradient(to left,
+    --gradient-direction: to left;
+    background: linear-gradient(var(--gradient-direction),
       var(--dark) 0%,
       color-mix(in srgb, var(--dark) 73.8%, transparent) 19%,
       color-mix(in srgb, var(--dark) 54.1%, transparent) 34%,
