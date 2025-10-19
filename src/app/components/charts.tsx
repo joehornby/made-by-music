@@ -1,7 +1,17 @@
+"use client";
+
 import { cn } from "@/lib/utils";
 import ChartCard from "@/app/components/chart-card";
+import { useData } from "@/app/contexts/data-context";
 
 export default function Charts({ className }: { className?: string }) {
+  const { charts, loading, error } = useData();
+
+  if (loading.charts)
+    return <div className="text-center">Loading charts...</div>;
+  if (error.charts)
+    return <div className="text-red-500">Error: {error.charts}</div>;
+
   return (
     <div
       className={cn(
@@ -10,12 +20,15 @@ export default function Charts({ className }: { className?: string }) {
       )}
     >
       <p className="text-2xl font-normal">Top Charts</p>
-      <ChartCard
-        imageUrl="https://cdn-images.dzcdn.net/images/cover/229fc5df8f97df64ca717b5c7a6895a7/1000x1000-000000-80-0-0.jpg"
-        title="UK Top 40"
-        description="19 October 2025"
-        duration={7650}
-      />
+      {charts.map((chart) => (
+        <ChartCard
+          key={chart.id}
+          imageUrl={chart.picture_big}
+          title={chart.title}
+          description={chart.description}
+          duration={chart.duration}
+        />
+      ))}
     </div>
   );
 }

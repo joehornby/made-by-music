@@ -1,28 +1,15 @@
+"use client";
+
 import Collection from "@/app/components/collection";
-import { Collection as CollectionType } from "@/types/album";
+import { useData } from "@/app/contexts/data-context";
 
-async function getCollections(): Promise<CollectionType[]> {
-  try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"}/api`,
-      {
-        cache: "no-store",
-      }
-    );
+export default function Collections() {
+  const { collections, loading, error } = useData();
 
-    if (!response.ok) {
-      throw new Error("Failed to fetch collections");
-    }
-
-    return response.json();
-  } catch (error) {
-    console.error("Error fetching collections:", error);
-    return [];
-  }
-}
-
-export default async function Collections() {
-  const collections = await getCollections();
+  if (loading.collections)
+    return <div className="text-center">Loading collections...</div>;
+  if (error.collections)
+    return <div className="text-red-500">Error: {error.collections}</div>;
 
   return (
     <div className="mt-12 flex flex-col gap-4 w-full col-span-full">
