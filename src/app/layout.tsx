@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist_Mono } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
+import Sidebar from "@/app/components/sidebar";
 
 const acidGrotesk = localFont({
   src: [
@@ -29,8 +30,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={acidGrotesk.className}>
       <body
-        className={`${acidGrotesk.variable} ${geistMono.variable} antialiased bg-dark text-light`}
+        className={`${acidGrotesk.variable} ${geistMono.variable} antialiased bg-dark text-light grid grid-cols-[96px_1fr] p-4 gap-4`}
       >
+        <Sidebar className="col-span-1" />
         {children}
       </body>
     </html>

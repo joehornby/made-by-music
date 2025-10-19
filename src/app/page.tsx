@@ -4,7 +4,7 @@ import HeroSection from "@/app/components/hero";
 
 export default function Home() {
   return (
-    <div className="grid grid-cols-4 md:grid-cols-12 p-4 md:p-8 min-h-screen gap-8">
+    <div className="grid grid-cols-4 md:grid-cols-12 min-h-screen gap-4">
       <HeroSection className="col-span-8 w-full aspect-video" />
       <Charts className="col-span-4 w-full h-full" />
       <Collection name="New Releases" className="col-span-full h-[30vh]" />
