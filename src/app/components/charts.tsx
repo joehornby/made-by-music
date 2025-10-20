@@ -29,15 +29,15 @@ export default function Charts({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        "w-full h-full flex flex-col gap-4 items-start justify-start",
+        "w-full max-w-full h-full flex flex-col gap-4 items-start justify-start",
         className
       )}
     >
       <p className="text-2xl font-bold">Top Charts</p>
-      {charts.map((chart, index) => (
+      {charts.slice(0, 3).map((chart, index) => (
         <div
           key={chart.id}
-          className="fade-in"
+          className="fade-in w-full"
           style={{ animationDelay: `${index * 0.1}s` }}
         >
           <ChartCard
