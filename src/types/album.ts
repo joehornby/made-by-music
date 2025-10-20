@@ -26,3 +26,14 @@ export interface Collection {
   name: string;
   albums: Album[];
 }
+
+export interface Track {
+  id: string;
+  title: string;
+  artistName: string;
+  albumTitle: string;
+  duration: number;
+  audioUrl: string;
+  imageUrl: string;
+  albumId: string;
+}
