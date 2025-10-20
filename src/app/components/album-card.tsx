@@ -1,30 +1,43 @@
+"use client";
+
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 import { AlbumCardProps } from "@/types/album";
+import { usePreload } from "@/app/contexts/preload-context";
 
-export default function AlbumCard({ 
-  className, 
-  imageUrl, 
-  albumTitle, 
+export default function AlbumCard({
+  className,
+  imageUrl,
+  albumTitle,
   artistName,
   albumId,
   playUrl,
 }: AlbumCardProps) {
+  const { preloadTrack, getPreloadedTrack } = usePreload();
+
+  const handleMouseEnter = () => {
+    if (albumId && !getPreloadedTrack(albumId)) {
+      preloadTrack(albumId);
+    }
+  };
+
   return (
     <Link
-      href={playUrl || `/play/${albumId}`}
+      href={playUrl || `/album/${albumId}`}
       className={cn(
         "flex flex-col gap-4 items-start group cursor-pointer w-38 active-scale",
         className
       )}
+      onMouseEnter={handleMouseEnter}
     >
-      <div className="relative super-rounded-lg shrink-0 size-38 overflow-hidden transition-all duration-350 group-hover:duration-120 group-hover:rounded-3xl">
+      <div className="relative super-rounded-lg shrink-0 size-38 overflow-hidden transition-all duration-350 group-hover:duration-120 group-hover:rounded-xl group-hover:scale-105 group-hover:-translate-y-1">
         <Image
           alt={albumTitle}
-          className="absolute inset-0 max-w-none object-cover pointer-events-none size-full transition-transform duration-350 group-hover:duration-120 scale-[1.05] group-hover:scale-[1] ease-out"
+          className="absolute inset-0 max-w-none object-cover pointer-events-none size-full transition-transform duration-350 group-hover:duration-120 scale-105 group-hover:scale-[1] ease-out"
           src={imageUrl}
           fill
+          sizes="152px"
         />
       </div>
       <div className="flex flex-col gap-0.5 items-start">

@@ -28,7 +28,7 @@ export default function ChartCard({
   return (
     <div
       className={cn(
-        "cursor-pointer super-rounded-xl w-full h-auto p-4 bg-dark-alt flex items-center justify-between gap-8 hover:bg-light/5 text-left group/chart active-scale",
+        "cursor-pointer super-rounded-lg w-full h-auto p-4 bg-dark-alt flex items-center justify-between gap-8 hover:bg-light/5 text-left group/chart active-scale",
         className
       )}
     >
