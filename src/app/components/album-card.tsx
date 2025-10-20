@@ -19,16 +19,16 @@ export default function AlbumCard({
         className
       )}
     >
-      <div className="relative super-rounded-lg shrink-0 size-38 overflow-hidden transition-all duration-120 group-hover:rounded-3xl">
+      <div className="relative super-rounded-lg shrink-0 size-38 overflow-hidden transition-all duration-350 group-hover:duration-120 group-hover:rounded-3xl">
         <Image
           alt={albumTitle}
-          className="absolute inset-0 max-w-none object-cover pointer-events-none size-full transition-transform duration-120 scale-[1.1] group-hover:scale-[1] ease-out"
+          className="absolute inset-0 max-w-none object-cover pointer-events-none size-full transition-transform duration-350 group-hover:duration-120 scale-[1.05] group-hover:scale-[1] ease-out"
           src={imageUrl}
           fill
         />
       </div>
       <div className="flex flex-col gap-0.5 items-start">
-        <p className="font-normal leading-normal relative text-base text-light group-hover:font-bold transition-all duration-10 ease-out line-clamp-2 overflow-hidden">
+        <p className="font-normal leading-normal relative text-base text-light group-hover:brightness-150 transition-all duration-350 group-hover:duration-120 ease-out line-clamp-2 overflow-hidden">
           {albumTitle}
         </p>
         <p className="font-normal leading-normal relative text-base text-light/70 line-clamp-2 overflow-hidden">
