@@ -27,7 +27,7 @@ function transformAlbumData(rawAlbum: RawAlbum): Album {
     artistName: rawAlbum.artist?.name || "Unknown Artist",
     imageUrl:
       rawAlbum.cover_xl || rawAlbum.cover_big || rawAlbum.cover_medium || "",
-    playUrl: `/play/${rawAlbum.id}`,
+    playUrl: `/album/${rawAlbum.id}`,
     releaseDate: rawAlbum.release_date || "",
     duration: rawAlbum.duration ?? 0,
     trackCount: rawAlbum.nb_tracks ?? 0,
