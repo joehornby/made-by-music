@@ -10,7 +10,6 @@ export default function HeroSection({ className }: { className?: string }) {
       )}
     >
       <AudioVisualiser />
-      <div className="absolute inset-0 bg-gradient-to-b to-dark/10 z-50" />
     </div>
   );
 }
