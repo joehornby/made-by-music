@@ -27,7 +27,7 @@ export default function Topbar({ className }: { className?: string }) {
     >
       <div className="flex gap-6 items-center pl-6 w-full">
         <div
-          className="relative shrink-0 size-[16px] cursor-pointer"
+          className="relative shrink-0 size-4 cursor-pointer"
           onMouseDown={searchValue ? handleClearClick : handleSearchClick}
         >
           {searchValue ? (
