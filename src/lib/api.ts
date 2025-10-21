@@ -31,6 +31,19 @@ export interface Collection {
   albums: Album[];
 }
 
+export interface Playlist {
+  id: string;
+  title: string;
+  description?: string;
+  cover: string;
+  nb_tracks: number;
+  type: "playlist";
+}
+
+export interface PlaylistWithTracks extends Playlist {
+  tracks: PaginatedResponse<Track>;
+}
+
 export interface PaginatedResponse<T> {
   data: T[];
   total: number;
@@ -95,6 +108,39 @@ export async function getCollections(): Promise<PaginatedResponse<Collection>> {
 export async function getCollection(id: string): Promise<Collection> {
   const response = await fetch(`${API_BASE_URL}/collections/${id}`, { cache: "no-store" });
   return handleResponse<Collection>(response);
+}
+
+export async function getPlaylists(): Promise<PaginatedResponse<Playlist>> {
+  const response = await fetch(`${API_BASE_URL}/playlists`, {
+    cache: "no-store",
+  });
+  return handleResponse<PaginatedResponse<Playlist>>(response);
+}
+
+export async function getPlaylist(id: string): Promise<Playlist> {
+  const response = await fetch(`${API_BASE_URL}/playlists/${id}`, {
+    cache: "no-store",
+  });
+  return handleResponse<Playlist>(response);
+}
+
+export async function getPlaylistWithTracks(
+  id: string
+): Promise<PlaylistWithTracks> {
+  const response = await fetch(
+    `${API_BASE_URL}/playlists/${id}?expand=tracks`,
+    { cache: "no-store" }
+  );
+  return handleResponse<PlaylistWithTracks>(response);
+}
+
+export async function getTracksForPlaylist(
+  id: string
+): Promise<PaginatedResponse<Track>> {
+  const response = await fetch(`${API_BASE_URL}/playlists/${id}/tracks`, {
+    cache: "no-store",
+  });
+  return handleResponse<PaginatedResponse<Track>>(response);
 }
 
 export async function search(query: string): Promise<PaginatedResponse<Album | Track>> {
