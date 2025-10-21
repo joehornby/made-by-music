@@ -35,13 +35,15 @@ export default function RootLayout({
   return (
     <html lang="en" className={acidGrotesk.className}>
       <body
-        className={`${acidGrotesk.variable} ${geistMono.variable} antialiased bg-dark text-light grid grid-cols-[96px_1fr] grid-rows-[72px_auto] p-4 gap-4`}
+        className={`${acidGrotesk.variable} ${geistMono.variable} antialiased bg-dark text-light grid grid-cols-[0_1fr] md:grid-cols-[96px_1fr] grid-rows-[72px_auto] p-4 gap-4`}
       >
         <DataProvider>
           <PlaybackProvider>
             <Sidebar className="col-start-1 row-start-1" />
-            <Topbar className="col-start-2 col-span-1 row-start-1 sticky top-4" />
-            <div className="col-start-2 row-start-2 mb-48">{children}</div>
+            <Topbar className="col-span-full md:col-start-2 md:col-span-1 row-start-1 sticky top-4" />
+            <div className="col-span-full md:col-start-2 row-start-2 mb-48">
+              {children}
+            </div>
             <Player className="fixed bottom-0 left-0" />
             <AudioElement />
           </PlaybackProvider>

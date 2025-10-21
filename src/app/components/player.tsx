@@ -24,6 +24,7 @@ export default function Player({ className }: { className?: string }) {
     playNextTrack,
     playPreviousTrack,
     setVolume,
+    toggleVolume,
     seekTo,
   } = usePlayback();
 
@@ -34,7 +35,7 @@ export default function Player({ className }: { className?: string }) {
         className
       )}
     >
-      <div className="flex items-start justify-between h-full pt-4">
+      <div className="flex items-start sm:justify-between h-full pt-4">
         {/* Left: Album art + Track info */}
         <div className="flex items-center justify-between gap-4 flex-1 min-w-0">
           <Image
@@ -57,9 +58,12 @@ export default function Player({ className }: { className?: string }) {
         </div>
 
         {/* Center: Play controls + Transport bar */}
-        <div className="flex flex-col items-center gap-3 flex-1 max-w-md">
-          <div className="flex items-center gap-7">
-            <PreviousButton onClick={playPreviousTrack} />
+        <div className="flex flex-col items-end sm:items-center gap-3 flex-1 max-w-md">
+          <div className="flex items-center gap-4">
+            <PreviousButton
+              onClick={playPreviousTrack}
+              className="hidden sm:flex"
+            />
             <PlayPauseButton isPlaying={isPlaying} onClick={togglePlayPause} />
             <NextButton onClick={playNextTrack} />
           </div>
@@ -67,13 +71,13 @@ export default function Player({ className }: { className?: string }) {
             currentTime={currentTime}
             duration={duration}
             onSeek={seekTo}
-            className="w-full"
+            className="w-full hidden md:flex"
           />
         </div>
 
         {/* Right: Volume control */}
-        <div className="flex items-center gap-3 flex-1 justify-end">
-          <VolumeButton onClick={() => console.log("Volume control")} />
+        <div className="hidden sm:flex items-center gap-3 flex-1 justify-end">
+          <VolumeButton onClick={toggleVolume} volume={volume} />
           <VolumeSlider volume={volume} onVolumeChange={setVolume} />
         </div>
       </div>

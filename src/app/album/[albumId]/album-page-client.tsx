@@ -58,19 +58,18 @@ function AlbumPageSkeleton() {
   return (
     <PageContainer backButtonHref="/" backButtonText="Back to Home">
       {/* Header Skeleton */}
-      <div className="flex items-end gap-8 mb-8">
+      <div className="flex flex-col md:flex-row items-center md:items-end gap-8 mb-8">
         <div className="relative w-64 h-64 super-rounded-lg overflow-hidden album-cover-transition">
           <div className="w-full h-full bg-dark-alt animate-pulse" />
         </div>
-        <div className="flex-1">
-          <div className="h-12 bg-dark-alt rounded-lg mb-4 animate-pulse" />
-          <div className="h-8 bg-dark-alt rounded-lg mb-4 animate-pulse w-2/3" />
-          <div className="flex gap-6 mb-6">
+        <div className="flex-1 text-center md:text-left">
+          <div className="h-8 md:h-12 bg-dark-alt rounded-lg mb-4 animate-pulse mx-auto md:mx-0 w-3/4 md:w-full" />
+          <div className="h-6 md:h-8 bg-dark-alt rounded-lg mb-4 animate-pulse mx-auto md:mx-0 w-2/3" />
+          <div className="flex justify-center md:justify-start gap-6 mb-6">
             <div className="h-4 bg-dark-alt rounded animate-pulse w-20" />
             <div className="h-4 bg-dark-alt rounded animate-pulse w-16" />
-            <div className="h-4 bg-dark-alt rounded animate-pulse w-24" />
           </div>
-          <div className="h-12 bg-accent rounded-full w-32 animate-pulse" />
+          <div className="h-12 bg-accent rounded-full w-32 animate-pulse mx-auto md:mx-0" />
         </div>
       </div>
 
@@ -107,8 +106,8 @@ function AlbumPageContent({
   return (
     <PageContainer backButtonHref="/" backButtonText="Back to Home">
       {/* Header */}
-      <div className="flex items-end gap-8 mb-8">
-        <div className="relative w-64 h-64 super-rounded-lg overflow-hidden album-cover-transition">
+      <div className="flex flex-col md:flex-row items-center md:items-end gap-6 md:gap-8 mb-8">
+        <div className="relative w-48 h-48 md:w-64 md:h-64 super-rounded-lg overflow-hidden album-cover-transition">
           <Image
             src={album.cover_xl}
             alt={album.title}
@@ -118,10 +117,14 @@ function AlbumPageContent({
             sizes="256px"
           />
         </div>
-        <div className="flex-1">
-          <h1 className="text-5xl font-bold mb-4">{album.title}</h1>
-          <p className="text-2xl text-light/70 mb-4">{album.artist.name}</p>
-          <div className="flex gap-6 text-sm text-light/60 mb-6">
+        <div className="flex-1 text-center md:text-left w-full">
+          <h1 className="text-2xl md:text-5xl font-bold mb-4 break-words">
+            {album.title}
+          </h1>
+          <p className="text-lg md:text-2xl text-light/70 mb-4 break-words">
+            {album.artist.name}
+          </p>
+          <div className="flex justify-center md:justify-start gap-4 md:gap-6 text-sm text-light/60 mb-6 flex-wrap">
             <span>{album.release_date}</span>
             <span>{tracks.length} tracks</span>
           </div>
@@ -129,12 +132,7 @@ function AlbumPageContent({
             href={`/album/${album.id}/play`}
             className="inline-flex items-center gap-3 bg-accent hover:bg-accent/80 text-dark px-6 py-3 rounded-full font-medium transition-colors"
           >
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
               <path d="M6.3 2.841A1.5 1.5 0 0 0 4 4.11V15.89a1.5 1.5 0 0 0 2.3 1.269l9.344-5.89a1.5 1.5 0 0 0 0-2.538L6.3 2.84Z" />
             </svg>
             Play Album
@@ -143,22 +141,28 @@ function AlbumPageContent({
       </div>
 
       {/* Track List */}
-      <div className="bg-dark-alt super-rounded-lg p-6">
-        <h2 className="text-xl font-semibold mb-6">Tracks</h2>
+      <div className="bg-dark-alt super-rounded-lg p-4 md:p-6">
+        <h2 className="text-lg md:text-xl font-semibold mb-4 md:mb-6">
+          Tracks
+        </h2>
         <div className="space-y-2">
           {tracks.map((track, index) => (
             <div
               key={track.id}
-              className="flex items-center gap-4 p-3 super-rounded-lg hover:bg-white/5 transition-colors"
+              className="flex items-center gap-2 md:gap-4 p-2 md:p-3 super-rounded-lg hover:bg-light/5 transition-colors"
             >
-              <span className="text-light/40 w-8 text-center">
+              <span className="text-light/40 w-6 md:w-8 text-center text-sm md:text-base">
                 {index + 1}
               </span>
-              <div className="flex-1">
-                <p className="font-medium">{track.title}</p>
-                <p className="text-sm text-light/60">{track.artist.name}</p>
+              <div className="flex-1 min-w-0">
+                <p className="font-medium text-sm md:text-base truncate">
+                  {track.title}
+                </p>
+                <p className="text-xs md:text-sm text-light/60 truncate">
+                  {track.artist.name}
+                </p>
               </div>
-              <span className="text-light/40 text-sm">
+              <span className="text-light/40 text-xs md:text-sm flex-shrink-0">
                 {Math.floor(track.duration / 60)}:
                 {(track.duration % 60).toString().padStart(2, "0")}
               </span>

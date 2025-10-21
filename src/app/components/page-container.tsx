@@ -18,18 +18,22 @@ export default function PageContainer({
   className = "",
 }: PageContainerProps) {
   return (
-    <div className={`min-h-screen bg-dark text-light page-content-transition ${className}`}>
+    <div
+      className={`min-h-screen bg-dark text-light page-content-transition overflow-x-hidden ${className}`}
+    >
       {/* Full-width container for back button */}
       <div className="w-full">
         <div className="px-4 sm:px-6 lg:px-8">
-          <div className="mb-8">
+          <div className="mb-6 md:mb-8">
             <BackButton href={backButtonHref} text={backButtonText} />
           </div>
         </div>
       </div>
-      
+
       {/* Content container with optional max width */}
-      <div className={`mx-auto px-4 sm:px-6 lg:px-8 ${maxWidth}`}>
+      <div
+        className={`mx-auto px-4 sm:px-6 lg:px-8 w-full max-w-full ${maxWidth}`}
+      >
         {children}
       </div>
     </div>

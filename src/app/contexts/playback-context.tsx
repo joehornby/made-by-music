@@ -24,6 +24,7 @@ type PlaybackContextType = {
   setCurrentTime: (time: number) => void;
   setDuration: (duration: number) => void;
   setVolume: (volume: number) => void;
+  toggleVolume: () => void;
   setPlaylist: (tracks: ApiTrack[]) => void;
   seekTo: (time: number) => void;
   audioRef: React.RefObject<HTMLAudioElement | null>;
@@ -39,6 +40,7 @@ export function PlaybackProvider({ children }: { children: ReactNode }) {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [volume, setVolume] = useState(0.7);
+  const [lastVolume, setLastVolume] = useState(0.7);
   const [playlist, setPlaylist] = useState<ApiTrack[]>([]);
   const [hasEnded, setHasEnded] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -204,10 +206,46 @@ export function PlaybackProvider({ children }: { children: ReactNode }) {
 
   const handleVolumeChange = useCallback((newVolume: number) => {
     setVolume(newVolume);
+    // Update lastVolume when user manually changes volume (not muted)
+    if (newVolume > 0) {
+      setLastVolume(newVolume);
+    }
     if (audioRef.current) {
-      audioRef.current.volume = newVolume;
+      // Smooth volume transition by gradually changing the audio volume
+      const currentVolume = audioRef.current.volume;
+      const volumeDiff = newVolume - currentVolume;
+      const steps = 10;
+      const stepSize = volumeDiff / steps;
+      const stepDuration = 20; // 20ms per step
+
+      let step = 0;
+      const volumeTransition = setInterval(() => {
+        step++;
+        const targetVolume = currentVolume + stepSize * step;
+
+        if (audioRef.current) {
+          audioRef.current.volume = Math.max(0, Math.min(1, targetVolume));
+        }
+
+        if (step >= steps) {
+          clearInterval(volumeTransition);
+          if (audioRef.current) {
+            audioRef.current.volume = newVolume; // Ensure exact final value
+          }
+        }
+      }, stepDuration);
     }
   }, []);
+
+  const toggleVolume = useCallback(() => {
+    if (volume > 0) {
+      // Currently unmuted, mute it
+      handleVolumeChange(0);
+    } else {
+      // Currently muted, restore to last volume
+      handleVolumeChange(lastVolume);
+    }
+  }, [volume, lastVolume, handleVolumeChange]);
 
   const seekTo = useCallback((time: number) => {
     if (audioRef.current) {
@@ -285,6 +323,7 @@ export function PlaybackProvider({ children }: { children: ReactNode }) {
         setCurrentTime,
         setDuration,
         setVolume: handleVolumeChange,
+        toggleVolume,
         setPlaylist,
         seekTo,
         audioRef,

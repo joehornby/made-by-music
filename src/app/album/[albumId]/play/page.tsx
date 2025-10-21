@@ -47,17 +47,23 @@ function AlbumPlayerContent({ album }: { album: AlbumWithTracks }) {
         <div className="absolute inset-0 bg-black/40" />
 
         {/* Back button */}
-        <div className="absolute top-32 left-32 z-10">
+        <div className="absolute top-4 md:top-32 left-4 md:left-32 z-10">
           <BackButton href={`/album/${album.id}`} text="Back to Album" />
         </div>
 
         {/* Album info */}
-        <div className="absolute bottom-0 left-0 right-0 p-8 text-white">
-          <h1 className="text-4xl font-bold mb-2">{album.title}</h1>
-          <p className="text-xl mb-4">{album.artist.name}</p>
-          <div className="flex gap-4 text-sm opacity-80">
-            <span>{album.release_date}</span>
-            <span>{album.tracks.data.length} tracks</span>
+        <div className="absolute bottom-0 left-0 right-0 p-8 pb-40 text-light">
+          <div className="flex flex-col md:flex-row items-center md:items-end gap-4 md:gap-0 md:ml-24">
+            <div className="text-center md:text-left">
+              <h1 className="text-2xl md:text-4xl font-bold mb-2">
+                {album.title}
+              </h1>
+              <p className="text-lg md:text-xl mb-4">{album.artist.name}</p>
+              <div className="flex justify-center md:justify-start gap-4 text-sm opacity-80">
+                <span>{album.release_date}</span>
+                <span>{album.tracks.data.length} tracks</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>

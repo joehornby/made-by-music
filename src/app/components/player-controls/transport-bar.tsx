@@ -27,10 +27,10 @@ export function TransportBar({
 
   return (
     <div className={`flex items-center gap-3 max-w-md mx-auto ${className}`}>
-      <span className="text-xs text-white/80 font-['FFF_Acid_Grotesk:Normal',_sans-serif] tracking-[0.06px] min-w-[2rem]">
+      <span className="text-xs text-light/80 font-['FFF_Acid_Grotesk:Normal',_sans-serif] tracking-[0.06px] min-w-[2rem]">
         {formatTime(currentTime)}
       </span>
-      <div className="flex-1 relative h-2 bg-white/20 rounded-full min-w-[200px]">
+      <div className="flex-1 relative h-2 bg-light/20 rounded-full min-w-[200px]">
         <input
           type="range"
           min="0"
@@ -42,11 +42,11 @@ export function TransportBar({
           disabled={duration === 0}
         />
         <div
-          className="absolute inset-y-0 left-0 bg-white rounded-full transition-all duration-150"
+          className="absolute inset-y-0 left-0 bg-light rounded-full transition-all duration-150 pointer-events-none"
           style={{ width: `${progress}%` }}
         />
       </div>
-      <span className="text-xs text-white/80 font-['FFF_Acid_Grotesk:Normal',_sans-serif] tracking-[0.06px] min-w-[2rem]">
+      <span className="text-xs text-light/80 font-['FFF_Acid_Grotesk:Normal',_sans-serif] tracking-[0.06px] min-w-[2rem]">
         {formatTime(remainingTime)}
       </span>
     </div>

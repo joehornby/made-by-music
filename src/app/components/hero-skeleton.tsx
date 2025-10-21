@@ -6,12 +6,12 @@ export default function HeroSkeleton({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        "super-rounded-xl w-full h-full bg-white/10 flex items-center justify-center overflow-hidden z-0 relative",
+        "super-rounded-xl w-full h-full bg-light/10 flex items-center justify-center overflow-hidden z-0 relative",
         className
       )}
     >
       {/* Background skeleton */}
-      <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-white/10 skeleton" />
+      <div className="absolute inset-0 bg-gradient-to-br from-light/5 to-light/10 skeleton" />
       
       {/* Content skeleton */}
       <div className="bg-dark-alt/20 w-full h-full p-8 relative z-10 flex flex-col items-start justify-between">
