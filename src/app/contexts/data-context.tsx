@@ -1,95 +1,120 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState, ReactNode } from "react";
-import { Album, Collection } from "@/types/album";
-
-interface ChartData {
-  id: string;
-  title: string;
-  description: string;
-  duration: number;
-  picture_big: string;
-}
+import {
+  getCollections,
+  getAlbums,
+  getPlaylists,
+  type Collection,
+  type Album,
+  type Playlist,
+} from "@/lib/api";
 
 interface DataContextType {
   collections: Collection[];
-  charts: ChartData[];
+  albums: Album[];
+  playlists: Playlist[];
   loading: {
     collections: boolean;
-    charts: boolean;
+    albums: boolean;
+    playlists: boolean;
   };
   error: {
     collections: string | null;
-    charts: string | null;
+    albums: string | null;
+    playlists: string | null;
   };
   refetchCollections: () => Promise<void>;
-  refetchCharts: () => Promise<void>;
+  refetchAlbums: () => Promise<void>;
+  refetchPlaylists: () => Promise<void>;
 }
 
 const DataContext = createContext<DataContextType | undefined>(undefined);
 
 export function DataProvider({ children }: { children: ReactNode }) {
   const [collections, setCollections] = useState<Collection[]>([]);
-  const [charts, setCharts] = useState<ChartData[]>([]);
+  const [albums, setAlbums] = useState<Album[]>([]);
+  const [playlists, setPlaylists] = useState<Playlist[]>([]);
   const [loading, setLoading] = useState({
     collections: true,
-    charts: true,
+    albums: true,
+    playlists: true,
   });
   const [error, setError] = useState({
     collections: null as string | null,
-    charts: null as string | null,
+    albums: null as string | null,
+    playlists: null as string | null,
   });
 
   const fetchCollections = async () => {
     try {
-      setLoading(prev => ({ ...prev, collections: true }));
-      setError(prev => ({ ...prev, collections: null }));
-      
-      const response = await fetch('/api');
-      if (!response.ok) throw new Error('Failed to fetch collections');
-      const data = await response.json();
-      setCollections(data);
+      setLoading((prev) => ({ ...prev, collections: true }));
+      setError((prev) => ({ ...prev, collections: null }));
+
+      const response = await getCollections();
+      setCollections(response.data);
     } catch (err) {
-      setError(prev => ({ 
-        ...prev, 
-        collections: err instanceof Error ? err.message : 'Unknown error' 
+      console.error("Error fetching collections:", err);
+      setError((prev) => ({
+        ...prev,
+        collections: err instanceof Error ? err.message : "Unknown error",
       }));
     } finally {
-      setLoading(prev => ({ ...prev, collections: false }));
+      setLoading((prev) => ({ ...prev, collections: false }));
     }
   };
 
-  const fetchCharts = async () => {
+  const fetchAlbums = async () => {
     try {
-      setLoading(prev => ({ ...prev, charts: true }));
-      setError(prev => ({ ...prev, charts: null }));
-      
-      const response = await fetch('/api/charts');
-      if (!response.ok) throw new Error('Failed to fetch charts');
-      const data = await response.json();
-      setCharts(data);
+      setLoading((prev) => ({ ...prev, albums: true }));
+      setError((prev) => ({ ...prev, albums: null }));
+
+      const response = await getAlbums();
+      setAlbums(response.data);
     } catch (err) {
-      setError(prev => ({ 
-        ...prev, 
-        charts: err instanceof Error ? err.message : 'Unknown error' 
+      console.error("Error fetching albums:", err);
+      setError((prev) => ({
+        ...prev,
+        albums: err instanceof Error ? err.message : "Unknown error",
       }));
     } finally {
-      setLoading(prev => ({ ...prev, charts: false }));
+      setLoading((prev) => ({ ...prev, albums: false }));
+    }
+  };
+
+  const fetchPlaylists = async () => {
+    try {
+      setLoading((prev) => ({ ...prev, playlists: true }));
+      setError((prev) => ({ ...prev, playlists: null }));
+
+      const response = await getPlaylists();
+      setPlaylists(response.data);
+    } catch (err) {
+      console.error("Error fetching playlists:", err);
+      setError((prev) => ({
+        ...prev,
+        playlists: err instanceof Error ? err.message : "Unknown error",
+      }));
+    } finally {
+      setLoading((prev) => ({ ...prev, playlists: false }));
     }
   };
 
   useEffect(() => {
     fetchCollections();
-    fetchCharts();
+    fetchAlbums();
+    fetchPlaylists();
   }, []);
 
   const value: DataContextType = {
     collections,
-    charts,
+    albums,
+    playlists,
     loading,
     error,
     refetchCollections: fetchCollections,
-    refetchCharts: fetchCharts,
+    refetchAlbums: fetchAlbums,
+    refetchPlaylists: fetchPlaylists,
   };
 
   return <DataContext.Provider value={value}>{children}</DataContext.Provider>;
@@ -98,7 +123,7 @@ export function DataProvider({ children }: { children: ReactNode }) {
 export function useData() {
   const context = useContext(DataContext);
   if (context === undefined) {
-    throw new Error('useData must be used within a DataProvider');
+    throw new Error("useData must be used within a DataProvider");
   }
   return context;
 }

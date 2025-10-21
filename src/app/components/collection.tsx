@@ -1,6 +1,7 @@
 "use client";
 import { cn } from "@/lib/utils";
 import AlbumCard from "@/app/components/album-card";
+import AlbumCardSkeleton from "@/app/components/album-card-skeleton";
 import { Album } from "@/types/album";
 import { useState, useRef, useEffect } from "react";
 
@@ -8,12 +9,14 @@ interface CollectionProps {
   name: string;
   className?: string;
   albums: Album[];
+  isLoading?: boolean;
 }
 
 export default function Collection({
   name,
   className,
   albums,
+  isLoading = false,
 }: CollectionProps) {
   const [showRightFade, setShowRightFade] = useState(true);
   const [showLeftFade, setShowLeftFade] = useState(false);
@@ -45,22 +48,33 @@ export default function Collection({
         className
       )}
     >
-      <p className="text-2xl font-bold">{name}</p>
-      <div className="relative w-full">
+      {name && <p className="text-2xl font-bold">{name}</p>}
+      <div className="relative w-full overflow-visible">
         <div
           ref={scrollRef}
-          className="flex gap-4 items-start justify-start w-full overflow-x-scroll pb-4 scrollbar-hide"
+          className="flex gap-4 items-start justify-start w-full overflow-x-scroll overflow-y-visible pt-4 pb-4 scrollbar-hide"
         >
-          {albums.map((album, index) => (
-            <AlbumCard
-              key={album.id + index}
-              imageUrl={album.imageUrl}
-              albumTitle={album.title}
-              artistName={album.artistName}
-              albumId={album.id}
-              playUrl={album.playUrl}
-            />
-          ))}
+          {isLoading
+            ? // Show skeleton cards while loading
+              Array.from({ length: 6 }).map((_, index) => (
+                <AlbumCardSkeleton key={`skeleton-${index}`} />
+              ))
+            : // Show real album cards with fade-in animation
+              albums.map((album, index) => (
+                <div
+                  key={album.id + index}
+                  className="fade-in"
+                  style={{ animationDelay: `${index * 0.05}s` }}
+                >
+                  <AlbumCard
+                    imageUrl={album.imageUrl}
+                    albumTitle={album.title}
+                    artistName={album.artistName}
+                    albumId={album.id}
+                    playUrl={album.playUrl}
+                  />
+                </div>
+              ))}
         </div>
         <div
           className={`absolute top-0 left-0 w-32 h-full gradient-fade-r pointer-events-none transition-opacity duration-120 ease-in-out ${

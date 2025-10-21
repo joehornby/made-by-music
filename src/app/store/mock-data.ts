@@ -1,3 +1,26 @@
+import { Track } from "@/types/album";
+
+// Function to get tracks for an album using real track data
+export function getTracksForAlbum(albumId: string): Track[] {
+  for (const collection of mockCollectionData) {
+    const album = collection.albums.find((album) => album.id === albumId);
+    if (album && album.tracks && album.tracks.data) {
+      return album.tracks.data.map((track) => ({
+        id: track.id,
+        title: track.title,
+        artistName:
+          track.artist?.name || album.artist?.name || "Unknown Artist",
+        albumTitle: album.title,
+        duration: parseInt(track.duration) || 0,
+        audioUrl: track.preview || "",
+        imageUrl: album.cover_xl || album.cover_big || album.cover_medium || "",
+        albumId: album.id,
+      }));
+    }
+  }
+  return [];
+}
+
 export const mockCollectionData = [
   {
     name: "Recently Played",
@@ -8723,6 +8746,7 @@ export const mockCollectionData = [
 export const mockChartData = [
   {
     id: "7241549564",
+    albumId: "7241549564",
     title: "UK Top 40 | Charts 2025",
     description:
       "UK Top 40 Charts | 30th May 2025 | May 30th | 30/05/2025 | 2024 Charts | 2025 Charts | Cover: Ed Sheeran",
