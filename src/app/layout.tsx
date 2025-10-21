@@ -1,10 +1,15 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
+import Sidebar from "@/app/components/sidebar";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
+const acidGrotesk = localFont({
+  src: [
+    { path: "./fonts/FFF-AcidGrotesk-Normal-TRIAL.otf", weight: "400" },
+    { path: "./fonts/FFF-AcidGrotesk-Bold-TRIAL.otf", weight: "700" },
+  ],
+  variable: "--font-acid-grotesk",
 });
 
 const geistMono = Geist_Mono({
@@ -23,10 +28,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={acidGrotesk.className}>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${acidGrotesk.variable} ${geistMono.variable} antialiased bg-dark text-light grid grid-cols-[96px_1fr] p-4 gap-4`}
       >
+        <Sidebar className="col-span-1" />
         {children}
       </body>
     </html>
