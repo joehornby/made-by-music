@@ -18,7 +18,7 @@ type PlaybackContextType = {
   duration: number;
   volume: number;
   togglePlayPause: () => void;
-  playTrack: (track: ApiTrack) => void;
+  playTrack: (track: ApiTrack, autoPlay?: boolean) => void;
   playNextTrack: () => void;
   playPreviousTrack: () => void;
   setCurrentTime: (time: number) => void;
@@ -43,46 +43,61 @@ export function PlaybackProvider({ children }: { children: ReactNode }) {
   const [hasEnded, setHasEnded] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
 
-  const playTrack = useCallback(async (track: ApiTrack) => {
-    console.log("playTrack called with:", track);
-    setCurrentTrack(track);
-    setCurrentTime(0);
-    setHasEnded(false); // Reset the ended flag
-    if (audioRef.current) {
-      console.log(
-        "Setting audio src to:",
-        track.preview || getStreamUrl(track.id)
-      );
+  const playTrack = useCallback(
+    async (track: ApiTrack, autoPlay = false) => {
+      console.log("playTrack called with:", track, "autoPlay:", autoPlay);
+      setCurrentTrack(track);
+      setCurrentTime(0);
+      setHasEnded(false);
 
-      // Pause and reset the audio element before setting new source
-      audioRef.current.pause();
-      audioRef.current.currentTime = 0;
+      if (audioRef.current) {
+        console.log(
+          "Setting audio src to:",
+          track.preview || getStreamUrl(track.id)
+        );
 
-      // Set the new source
-      audioRef.current.src = track.preview || getStreamUrl(track.id);
-      audioRef.current.volume = volume;
+        // Pause and reset the audio element before setting new source
+        audioRef.current.pause();
+        audioRef.current.currentTime = 0;
 
-      // Load the audio
-      audioRef.current.load();
+        // Set the new source
+        audioRef.current.src = track.preview || getStreamUrl(track.id);
+        audioRef.current.volume = volume;
 
-      // Add error handling for audio loading
-      const handleError = (e: Event) => {
-        console.log("Audio loading error:", e);
-        audioRef.current?.removeEventListener("error", handleError);
-      };
+        // Load the audio
+        audioRef.current.load();
 
-      audioRef.current.addEventListener("error", handleError);
+        // If autoPlay is true, start playing after loading
+        if (autoPlay) {
+          const handleCanPlay = () => {
+            audioRef.current?.removeEventListener("canplay", handleCanPlay);
+            audioRef.current
+              ?.play()
+              .then(() => {
+                setIsPlaying(true);
+                console.log("Auto-play started for:", track.title);
+              })
+              .catch((error) => {
+                console.log("Auto-play failed:", error);
+              });
+          };
 
-      try {
-        // Don't auto-play, just prepare the audio
-        console.log("Audio prepared, readyState:", audioRef.current.readyState);
-      } catch (error) {
-        console.log("Audio preparation failed:", error);
+          audioRef.current.addEventListener("canplay", handleCanPlay);
+        }
+
+        // Add error handling for audio loading
+        const handleError = (e: Event) => {
+          console.log("Audio loading error:", e);
+          audioRef.current?.removeEventListener("error", handleError);
+        };
+
+        audioRef.current.addEventListener("error", handleError);
+      } else {
+        console.log("No audioRef.current available in playTrack");
       }
-    } else {
-      console.log("No audioRef.current available in playTrack");
-    }
-  }, []); // Remove volume from dependencies to prevent recreation
+    },
+    [volume]
+  );
 
   const togglePlayPause = useCallback(async () => {
     console.log(
@@ -95,7 +110,7 @@ export function PlaybackProvider({ children }: { children: ReactNode }) {
     // If no current track, try to play the first track in the playlist
     if (!currentTrack && playlist.length > 0) {
       console.log("No current track, playing first track from playlist");
-      playTrack(playlist[0]);
+      playTrack(playlist[0], true);
       return;
     }
 
@@ -131,7 +146,6 @@ export function PlaybackProvider({ children }: { children: ReactNode }) {
               ]);
             } catch (error) {
               console.log("Audio load failed or timed out:", error);
-              // Try to play anyway, might work
             }
           }
 
@@ -139,7 +153,6 @@ export function PlaybackProvider({ children }: { children: ReactNode }) {
           setIsPlaying(true);
         } catch (error) {
           console.log("Play failed:", error);
-          // Keep isPlaying as false if play fails
         }
       }
     } else {
@@ -159,15 +172,18 @@ export function PlaybackProvider({ children }: { children: ReactNode }) {
         (track) => track.id === currentTrack.id
       );
       const nextIndex = (currentIndex + 1) % playlist.length;
+      const nextTrack = playlist[nextIndex];
       console.log(
         "Current index:",
         currentIndex,
         "Next index:",
         nextIndex,
         "Next track:",
-        playlist[nextIndex]?.title
+        nextTrack?.title
       );
-      playTrack(playlist[nextIndex]);
+
+      // Play next track with autoPlay enabled
+      playTrack(nextTrack, true);
     } else {
       console.log(
         "Cannot play next track - no current track or empty playlist"
@@ -182,7 +198,7 @@ export function PlaybackProvider({ children }: { children: ReactNode }) {
       );
       const previousIndex =
         (currentIndex - 1 + playlist.length) % playlist.length;
-      playTrack(playlist[previousIndex]);
+      playTrack(playlist[previousIndex], true);
     }
   }, [currentTrack, playlist, playTrack]);
 
@@ -240,7 +256,7 @@ export function PlaybackProvider({ children }: { children: ReactNode }) {
       audio.removeEventListener("pause", handlePause);
       audio.removeEventListener("ended", handleEnded);
     };
-  }, [playNextTrack]);
+  }, [playNextTrack, hasEnded]);
 
   useEffect(() => {
     const handleGlobalKeyDown = (e: KeyboardEvent) => {
@@ -282,7 +298,7 @@ export function PlaybackProvider({ children }: { children: ReactNode }) {
 export function usePlayback() {
   const context = useContext(PlaybackContext);
   if (context === undefined) {
-    throw new Error('usePlayback must be used within a PlaybackProvider');
+    throw new Error("usePlayback must be used within a PlaybackProvider");
   }
   return context;
 }

@@ -30,7 +30,8 @@ export default function AlbumPlayerClient({
       if (tracks.length > 0) {
         console.log("Playing first track immediately:", tracks[0]);
         setPlaylist(tracks);
-        playTrack(tracks[0]);
+        playTrack(tracks[0], true); // Enable autoPlay
+
         setIsLoading(false);
       }
     };
