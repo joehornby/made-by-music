@@ -10,9 +10,8 @@ import { usePlayback } from "@/app/contexts/playback-context";
 import Heart from "@/app/components/heart";
 import Image from "next/image";
 
-// Image assets from Figma
-const imgRectangle15 =
-  "http://localhost:3845/assets/54d09315c8ff4afed238bbec62b996e928dc5ba3.png";
+// Black placeholder image
+const placeholderAlbumArt = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgMCA0OCA0OCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4IiBmaWxsPSIjMDAwMDAwIi8+Cjwvc3ZnPgo=";
 
 export default function Player({ className }: { className?: string }) {
   const {
@@ -37,29 +36,29 @@ export default function Player({ className }: { className?: string }) {
     >
       <div className="flex items-start justify-between h-full pt-4">
         {/* Left: Album art + Track info */}
-        <div className="flex items-center gap-4 flex-1 min-w-0">
+        <div className="flex items-center justify-between gap-4 flex-1 min-w-0">
           <Image
             alt="Album cover"
             width={48}
             height={48}
             className="w-12 h-12 rounded-[14px] object-cover flex-shrink-0"
-            src={currentTrack?.imageUrl || imgRectangle15}
+            src={currentTrack?.imageUrl || placeholderAlbumArt}
           />
-          <div className="min-w-0 flex-1">
-            <div className="flex items-center gap-2">
+          <div className="min-w-0 flex-1 flex items-start justify-start">
+            <div className="flex flex-col items-start gap-2">
               <h3 className="text-base text-light truncate">
                 {currentTrack?.title || "No track selected"}
               </h3>
-              <Heart isLiked={false} />
+              <p className="text-sm text-light/50 truncate">
+                {currentTrack?.artistName || "Unknown artist"}
+              </p>
             </div>
-            <p className="text-sm text-light/50 truncate">
-              {currentTrack?.artistName || "Unknown artist"}
-            </p>
+            <Heart isLiked={false} className="ms-8" />
           </div>
         </div>
 
         {/* Center: Play controls + Transport bar */}
-        <div className="flex flex-col items-center gap-3">
+        <div className="flex flex-col items-center gap-3 flex-1 max-w-md">
           <div className="flex items-center gap-7">
             <PreviousButton onClick={playPreviousTrack} />
             <PlayPauseButton isPlaying={isPlaying} onClick={togglePlayPause} />
@@ -69,6 +68,7 @@ export default function Player({ className }: { className?: string }) {
             currentTime={currentTime}
             duration={duration}
             onSeek={seekTo}
+            className="w-full"
           />
         </div>
 

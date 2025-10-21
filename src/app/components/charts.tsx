@@ -45,6 +45,7 @@ export default function Charts({ className }: { className?: string }) {
             title={chart.title}
             description={chart.description}
             duration={chart.duration}
+            albumId={chart.albumId}
           />
         </div>
       ))}

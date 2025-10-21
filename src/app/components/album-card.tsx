@@ -2,9 +2,9 @@
 
 import { cn } from "@/lib/utils";
 import Image from "next/image";
-import Link from "next/link";
 import { AlbumCardProps } from "@/types/album";
 import { usePreload } from "@/app/contexts/preload-context";
+import ViewTransitionLink from "@/app/components/view-transition-link";
 
 export default function AlbumCard({
   className,
@@ -14,16 +14,19 @@ export default function AlbumCard({
   albumId,
   playUrl,
 }: AlbumCardProps) {
-  const { preloadTrack, getPreloadedTrack } = usePreload();
+  const { preloadTrack, preloadAlbum, getPreloadedTrack } = usePreload();
 
   const handleMouseEnter = () => {
-    if (albumId && !getPreloadedTrack(albumId)) {
-      preloadTrack(albumId);
+    if (albumId) {
+      if (!getPreloadedTrack(albumId)) {
+        preloadTrack(albumId);
+      }
+      preloadAlbum(albumId);
     }
   };
 
   return (
-    <Link
+    <ViewTransitionLink
       href={playUrl || `/album/${albumId}`}
       className={cn(
         "flex flex-col gap-4 items-start group cursor-pointer w-38 active-scale",
@@ -31,7 +34,7 @@ export default function AlbumCard({
       )}
       onMouseEnter={handleMouseEnter}
     >
-      <div className="relative super-rounded-lg shrink-0 size-38 overflow-hidden transition-all duration-350 group-hover:duration-120 group-hover:rounded-xl group-hover:scale-105 group-hover:-translate-y-1">
+      <div className="relative super-rounded-lg shrink-0 size-38 overflow-hidden transition-all duration-350 group-hover:duration-120 group-hover:rounded-xl group-hover:scale-105 group-hover:-translate-y-1 album-cover-transition">
         <Image
           alt={albumTitle}
           className="absolute inset-0 max-w-none object-cover pointer-events-none size-full transition-transform duration-350 group-hover:duration-120 scale-105 group-hover:scale-[1] ease-out"
@@ -48,6 +51,6 @@ export default function AlbumCard({
           {artistName}
         </p>
       </div>
-    </Link>
+    </ViewTransitionLink>
   );
 }

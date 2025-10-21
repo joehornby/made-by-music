@@ -30,7 +30,7 @@ export function TransportBar({
       <span className="text-xs text-white/80 font-['FFF_Acid_Grotesk:Normal',_sans-serif] tracking-[0.06px] min-w-[2rem]">
         {formatTime(currentTime)}
       </span>
-      <div className="flex-1 relative h-1 bg-white/10 rounded-full">
+      <div className="flex-1 relative h-2 bg-white/20 rounded-full min-w-[200px]">
         <input
           type="range"
           min="0"
@@ -39,8 +39,9 @@ export function TransportBar({
           value={currentTime}
           onChange={handleSliderChange}
           className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+          disabled={duration === 0}
         />
-        <div 
+        <div
           className="absolute inset-y-0 left-0 bg-white rounded-full transition-all duration-150"
           style={{ width: `${progress}%` }}
         />

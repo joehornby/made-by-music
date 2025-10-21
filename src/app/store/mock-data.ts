@@ -8746,6 +8746,7 @@ export const mockCollectionData = [
 export const mockChartData = [
   {
     id: "7241549564",
+    albumId: "7241549564",
     title: "UK Top 40 | Charts 2025",
     description:
       "UK Top 40 Charts | 30th May 2025 | May 30th | 30/05/2025 | 2024 Charts | 2025 Charts | Cover: Ed Sheeran",

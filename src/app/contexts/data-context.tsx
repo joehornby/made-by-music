@@ -5,6 +5,7 @@ import { Album, Collection } from "@/types/album";
 
 interface ChartData {
   id: string;
+  albumId: string;
   title: string;
   description: string;
   duration: number;
