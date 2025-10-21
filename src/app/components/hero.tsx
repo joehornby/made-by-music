@@ -8,7 +8,7 @@ export default function HeroSection({ className }: { className?: string }) {
     <Link
       href="/playlist/9547758462"
       className={cn(
-        "super-rounded-xl w-full aspect-[1.8] bg-white/10 flex items-center justify-center overflow-hidden z-0 relative transition-all duration-120 ease-out hover:rounded-3xl group",
+        "super-rounded-xl w-full aspect-[1.8] bg-light/10 flex items-center justify-center overflow-hidden z-0 relative transition-all duration-120 ease-out hover:rounded-3xl group",
         className
       )}
     >
@@ -30,7 +30,7 @@ export default function HeroSection({ className }: { className?: string }) {
               fill="white"
             />
           </svg>
-          <p className="text-sm text-white/70">2,355 fans</p>
+          <p className="text-sm text-light/70">2,355 fans</p>
         </div>
       </div>
     </Link>

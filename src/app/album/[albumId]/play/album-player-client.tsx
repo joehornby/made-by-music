@@ -42,8 +42,8 @@ export default function AlbumPlayerClient({
   if (isLoading) {
     return (
       <div className="fixed inset-0 w-full h-full flex items-center justify-center bg-black/40">
-        <div className="text-white text-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white mx-auto mb-4"></div>
+        <div className="text-light text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-light mx-auto mb-4"></div>
           <p>Loading tracks...</p>
         </div>
       </div>

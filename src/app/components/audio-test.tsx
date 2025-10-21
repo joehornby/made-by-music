@@ -34,7 +34,7 @@ export default function AudioTest() {
   if (loading) {
     return (
       <div className="p-4 bg-gray-800 rounded-lg">
-        <h2 className="text-white text-lg mb-2">Audio Test</h2>
+        <h2 className="text-light text-lg mb-2">Audio Test</h2>
         <p className="text-gray-300 text-sm">Loading track...</p>
       </div>
     );
@@ -43,7 +43,7 @@ export default function AudioTest() {
   if (error) {
     return (
       <div className="p-4 bg-gray-800 rounded-lg">
-        <h2 className="text-white text-lg mb-2">Audio Test</h2>
+        <h2 className="text-light text-lg mb-2">Audio Test</h2>
         <p className="text-red-300 text-sm">Error: {error}</p>
       </div>
     );
@@ -51,7 +51,7 @@ export default function AudioTest() {
 
   return (
     <div className="p-4 bg-gray-800 rounded-lg">
-      <h2 className="text-white text-lg mb-2">Audio Test</h2>
+      <h2 className="text-light text-lg mb-2">Audio Test</h2>
       <p className="text-gray-300 text-sm">
         Track loaded successfully! Click the play button in the player controls
         below to start playback.

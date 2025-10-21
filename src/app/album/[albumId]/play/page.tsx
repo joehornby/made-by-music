@@ -52,7 +52,7 @@ function AlbumPlayerContent({ album }: { album: AlbumWithTracks }) {
         </div>
 
         {/* Album info */}
-        <div className="absolute bottom-0 left-0 right-0 p-8 text-white">
+        <div className="absolute bottom-0 left-0 right-0 p-8 text-light">
           <h1 className="text-4xl font-bold mb-2">{album.title}</h1>
           <p className="text-xl mb-4">{album.artist.name}</p>
           <div className="flex gap-4 text-sm opacity-80">

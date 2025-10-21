@@ -40,7 +40,7 @@ export function VolumeSlider({
 
   return (
     <div className={`flex items-center gap-3 ${className}`}>
-      <div className="w-20 h-1 bg-white/10 rounded-full relative">
+      <div className="w-20 h-1 bg-light/10 rounded-full relative">
         <input
           type="range"
           min="0"
@@ -51,7 +51,7 @@ export function VolumeSlider({
           className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
         />
         <div
-          className="h-full bg-white rounded-full transition-all duration-75 ease-out"
+          className="h-full bg-light rounded-full transition-all duration-75 ease-out"
           style={{ width: `${localVolume * 100}%` }}
         />
       </div>

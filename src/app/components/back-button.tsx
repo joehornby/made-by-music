@@ -12,7 +12,7 @@ export default function BackButton({ href, text, className = "" }: BackButtonPro
   return (
     <Link
       href={href}
-      className={`flex items-center gap-3 text-white hover:text-white/80 transition-colors ${className}`}
+      className={`flex items-center gap-3 text-light hover:text-light/80 transition-colors ${className}`}
     >
       <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
         <path
