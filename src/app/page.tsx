@@ -1,15 +1,13 @@
-import Collection from "@/app/components/collection";
+import Collections from "@/app/components/collections";
 import Charts from "@/app/components/charts";
 import HeroSection from "@/app/components/hero";
 
-export default function Home() {
+export default async function Home() {
   return (
-    <div className="grid grid-cols-4 md:grid-cols-12 min-h-screen gap-4">
-      <HeroSection className="col-span-8 w-full aspect-video" />
-      <Charts className="col-span-4 w-full h-full" />
-      <Collection name="New Releases" className="col-span-full h-[30vh]" />
-      <Collection name="Recently Played" className="col-span-full h-[30vh]" />
-      <Collection name="Made for You" className="col-span-full h-[30vh]" />
-    </div>
+    <main className="grid grid-cols-4 md:grid-cols-12 min-h-screen gap-4">
+      <HeroSection className="col-span-full md:col-span-8 w-full aspect-[1.8]" />
+      <Charts className="col-span-full md:col-span-4" />
+      <Collections />
+    </main>
   );
 }

@@ -3,6 +3,9 @@ import { Geist_Mono } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 import Sidebar from "@/app/components/sidebar";
+import Topbar from "@/app/components/topbar";
+import Player from "@/app/components/player";
+import { DataProvider } from "@/app/contexts/data-context";
 
 const acidGrotesk = localFont({
   src: [
@@ -30,10 +33,14 @@ export default function RootLayout({
   return (
     <html lang="en" className={acidGrotesk.className}>
       <body
-        className={`${acidGrotesk.variable} ${geistMono.variable} antialiased bg-dark text-light grid grid-cols-[96px_1fr] p-4 gap-4`}
+        className={`${acidGrotesk.variable} ${geistMono.variable} antialiased bg-dark text-light grid grid-cols-[96px_1fr] grid-rows-[72px_auto] p-4 gap-4`}
       >
-        <Sidebar className="col-span-1" />
-        {children}
+        <DataProvider>
+          <Sidebar className="col-start-1 row-start-1" />
+          <Topbar className="col-start-2 col-span-1 row-start-1 sticky top-4" />
+          <div className="col-start-2 row-start-2 mb-48">{children}</div>
+          <Player className="fixed bottom-0 left-0" />
+        </DataProvider>
       </body>
     </html>
   );
