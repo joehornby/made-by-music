@@ -42,7 +42,7 @@ export function TransportBar({
           disabled={duration === 0}
         />
         <div
-          className="absolute inset-y-0 left-0 bg-light rounded-full transition-all duration-150"
+          className="absolute inset-y-0 left-0 bg-light rounded-full transition-all duration-150 pointer-events-none"
           style={{ width: `${progress}%` }}
         />
       </div>
