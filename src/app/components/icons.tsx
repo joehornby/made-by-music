@@ -161,7 +161,7 @@ export function LogoutIcon({
     <IconWrapper
       selected={selected}
       className={className}
-      viewBox="-4 0 22 22"
+      viewBox="-4 0 26 22"
       width={width}
       height={height}
     >
