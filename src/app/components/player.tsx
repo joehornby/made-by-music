@@ -7,11 +7,11 @@ import { VolumeButton } from "@/app/components/player-controls/volume";
 import { VolumeSlider } from "@/app/components/player-controls/volume-slider";
 import { TransportBar } from "@/app/components/player-controls/transport-bar";
 import { usePlayback } from "@/app/contexts/playback-context";
-import Heart from "@/app/components/heart";
 import Image from "next/image";
 
 // Black placeholder image
-const placeholderAlbumArt = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgMCA0OCA0OCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4IiBmaWxsPSIjMDAwMDAwIi8+Cjwvc3ZnPgo=";
+const placeholderAlbumArt =
+  "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgMCA0OCA0OCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4IiBmaWxsPSIjMDAwMDAwIi8+Cjwvc3ZnPgo=";
 
 export default function Player({ className }: { className?: string }) {
   const {
@@ -53,7 +53,6 @@ export default function Player({ className }: { className?: string }) {
                 {currentTrack?.artist?.name || "Unknown artist"}
               </p>
             </div>
-            <Heart isLiked={false} className="ms-8" />
           </div>
         </div>
 
