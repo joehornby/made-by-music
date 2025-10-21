@@ -6,9 +6,9 @@ import ChartCardSkeleton from "@/app/components/chart-card-skeleton";
 import { useData } from "@/app/contexts/data-context";
 
 export default function Charts({ className }: { className?: string }) {
-  const { charts, loading, error } = useData();
+  const { albums, loading, error } = useData();
 
-  if (loading.charts) {
+  if (loading.albums) {
     return (
       <div
         className={cn(
@@ -23,8 +23,8 @@ export default function Charts({ className }: { className?: string }) {
       </div>
     );
   }
-  if (error.charts)
-    return <div className="text-red-500">Error: {error.charts}</div>;
+  if (error.albums)
+    return <div className="text-red-500">Error: {error.albums}</div>;
 
   return (
     <div
@@ -34,18 +34,18 @@ export default function Charts({ className }: { className?: string }) {
       )}
     >
       <p className="text-2xl font-bold">Top Charts</p>
-      {charts.slice(0, 3).map((chart, index) => (
+      {albums.slice(0, 3).map((album, index) => (
         <div
-          key={chart.id}
+          key={album.id}
           className="fade-in w-full"
           style={{ animationDelay: `${index * 0.1}s` }}
         >
           <ChartCard
-            imageUrl={chart.picture_big}
-            title={chart.title}
-            description={chart.description}
-            duration={chart.duration}
-            albumId={chart.albumId}
+            imageUrl={album.cover_xl}
+            title={album.title}
+            description={album.artist.name}
+            duration={0} // Albums don't have duration in the API spec
+            albumId={album.id.toString()}
           />
         </div>
       ))}

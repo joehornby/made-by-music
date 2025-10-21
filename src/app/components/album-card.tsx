@@ -3,7 +3,6 @@
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { AlbumCardProps } from "@/types/album";
-import { usePreload } from "@/app/contexts/preload-context";
 import ViewTransitionLink from "@/app/components/view-transition-link";
 
 export default function AlbumCard({
@@ -14,17 +13,6 @@ export default function AlbumCard({
   albumId,
   playUrl,
 }: AlbumCardProps) {
-  const { preloadTrack, preloadAlbum, getPreloadedTrack } = usePreload();
-
-  const handleMouseEnter = () => {
-    if (albumId) {
-      if (!getPreloadedTrack(albumId)) {
-        preloadTrack(albumId);
-      }
-      preloadAlbum(albumId);
-    }
-  };
-
   return (
     <ViewTransitionLink
       href={playUrl || `/album/${albumId}`}
@@ -32,7 +20,6 @@ export default function AlbumCard({
         "flex flex-col gap-4 items-start group cursor-pointer w-38 active-scale",
         className
       )}
-      onMouseEnter={handleMouseEnter}
     >
       <div className="relative super-rounded-lg shrink-0 size-38 overflow-hidden transition-all duration-350 group-hover:duration-120 group-hover:rounded-xl group-hover:scale-105 group-hover:-translate-y-1 album-cover-transition">
         <Image

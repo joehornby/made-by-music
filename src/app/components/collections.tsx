@@ -2,6 +2,26 @@
 
 import Collection from "@/app/components/collection";
 import { useData } from "@/app/contexts/data-context";
+import { type Album as LegacyAlbum } from "@/types/album";
+import { type Album as ApiAlbum } from "@/lib/api";
+
+// Transform API Album to legacy Album format
+function transformApiAlbumToLegacy(apiAlbum: ApiAlbum): LegacyAlbum {
+  return {
+    id: apiAlbum.id.toString(),
+    title: apiAlbum.title,
+    artistName: apiAlbum.artist.name,
+    imageUrl: apiAlbum.cover_xl,
+    playUrl: `/album/${apiAlbum.id}`,
+    releaseDate: apiAlbum.release_date,
+    duration: 0, // Albums don't have duration in API spec
+    trackCount: 0, // Will be updated when tracks are loaded
+    genre: "Unknown", // Not available in API spec
+    label: "Unknown", // Not available in API spec
+    fans: 0, // Not available in API spec
+    explicitLyrics: false, // Not available in API spec
+  };
+}
 
 export default function Collections() {
   const { collections, loading, error } = useData();
@@ -25,14 +45,14 @@ export default function Collections() {
         : // Show real collections with fade-in animation
           collections.map((collection, index) => (
             <div
-              key={collection.name + index}
+              key={collection.id + index}
               className="fade-in"
               style={{ animationDelay: `${index * 0.1}s` }}
             >
               <Collection
-                name={collection.name}
+                name={collection.title}
                 className="col-span-full"
-                albums={collection.albums}
+                albums={collection.albums.map(transformApiAlbumToLegacy)}
                 isLoading={false}
               />
             </div>

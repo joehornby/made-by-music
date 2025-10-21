@@ -42,7 +42,7 @@ export default function Player({ className }: { className?: string }) {
             width={48}
             height={48}
             className="w-12 h-12 rounded-[14px] object-cover flex-shrink-0"
-            src={currentTrack?.imageUrl || placeholderAlbumArt}
+            src={currentTrack?.album?.cover_xl || placeholderAlbumArt}
           />
           <div className="min-w-0 flex-1 flex items-start justify-start">
             <div className="flex flex-col items-start gap-2">
@@ -50,7 +50,7 @@ export default function Player({ className }: { className?: string }) {
                 {currentTrack?.title || "No track selected"}
               </h3>
               <p className="text-sm text-light/50 truncate">
-                {currentTrack?.artistName || "Unknown artist"}
+                {currentTrack?.artist?.name || "Unknown artist"}
               </p>
             </div>
             <Heart isLiked={false} className="ms-8" />

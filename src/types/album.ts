@@ -1,3 +1,4 @@
+// Legacy types for backward compatibility with existing components
 export interface Album {
   id: string;
   title: string;

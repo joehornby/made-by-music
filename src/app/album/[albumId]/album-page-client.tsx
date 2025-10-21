@@ -1,73 +1,56 @@
 "use client";
 
-import Image from 'next/image';
-import { Album, Track } from '@/types/album';
-import Link from 'next/link';
-import { useEffect, useState } from 'react';
-import ViewTransitionLink from '@/app/components/view-transition-link';
-import { usePreload } from '@/app/contexts/preload-context';
+import Image from "next/image";
+import { useEffect, useState } from "react";
+import ViewTransitionLink from "@/app/components/view-transition-link";
+import {
+  getAlbumWithTracks,
+  type AlbumWithTracks,
+  type Track,
+} from "@/lib/api";
 
 interface AlbumPageClientProps {
   albumId: string;
 }
 
 export default function AlbumPageClient({ albumId }: AlbumPageClientProps) {
-  const { getPreloadedAlbum } = usePreload();
-  const [album, setAlbum] = useState<Album | null>(null);
-  const [tracks, setTracks] = useState<Track[]>([]);
+  const [albumData, setAlbumData] = useState<AlbumWithTracks | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    // Check if we have preloaded data first
-    const preloadedAlbum = getPreloadedAlbum(albumId);
-    if (preloadedAlbum) {
-      setAlbum(preloadedAlbum);
-      setLoading(false);
-    }
-
     const fetchData = async () => {
       try {
-        const [albumResponse, tracksResponse] = await Promise.all([
-          fetch(`/api/album/${albumId}`, { cache: 'no-store' }),
-          fetch(`/api/tracks/${albumId}`, { cache: 'no-store' })
-        ]);
-        
-        if (!albumResponse.ok || !tracksResponse.ok) {
-          throw new Error('Failed to fetch album or tracks');
-        }
-        
-        const albumData: Album = await albumResponse.json();
-        const tracksData: Track[] = await tracksResponse.json();
-        
-        setAlbum(albumData);
-        setTracks(tracksData);
+        const data = await getAlbumWithTracks(parseInt(albumId));
+        setAlbumData(data);
       } catch (err) {
-        setError(err instanceof Error ? err.message : 'Unknown error');
+        setError(err instanceof Error ? err.message : "Unknown error");
       } finally {
         setLoading(false);
       }
     };
 
     fetchData();
-  }, [albumId, getPreloadedAlbum]);
+  }, [albumId]);
 
   if (loading) {
     return <AlbumPageSkeleton />;
   }
 
-  if (error || !album) {
+  if (error || !albumData) {
     return (
       <div className="flex items-center justify-center h-screen">
         <div className="text-center">
           <h1 className="text-2xl font-bold mb-4">Album Not Found</h1>
-          <p className="text-gray-600">We can&apos;t find the album you&apos;re looking for.</p>
+          <p className="text-gray-600">
+            We can&apos;t find the album you&apos;re looking for.
+          </p>
         </div>
       </div>
     );
   }
 
-  return <AlbumPageContent album={album} tracks={tracks} />;
+  return <AlbumPageContent album={albumData} tracks={albumData.tracks.data} />;
 }
 
 function AlbumPageSkeleton() {
@@ -115,7 +98,13 @@ function AlbumPageSkeleton() {
   );
 }
 
-function AlbumPageContent({ album, tracks }: { album: Album; tracks: Track[] }) {
+function AlbumPageContent({
+  album,
+  tracks,
+}: {
+  album: AlbumWithTracks;
+  tracks: Track[];
+}) {
   return (
     <div className="min-h-screen bg-dark text-light page-content-transition">
       <div className="max-w-6xl mx-auto">
@@ -123,7 +112,7 @@ function AlbumPageContent({ album, tracks }: { album: Album; tracks: Track[] }) 
         <div className="flex items-end gap-8 mb-8">
           <div className="relative w-64 h-64 super-rounded-lg overflow-hidden album-cover-transition">
             <Image
-              src={album.imageUrl}
+              src={album.cover_xl}
               alt={album.title}
               fill
               className="object-cover"
@@ -133,12 +122,10 @@ function AlbumPageContent({ album, tracks }: { album: Album; tracks: Track[] }) 
           </div>
           <div className="flex-1">
             <h1 className="text-5xl font-bold mb-4">{album.title}</h1>
-            <p className="text-2xl text-light/70 mb-4">{album.artistName}</p>
+            <p className="text-2xl text-light/70 mb-4">{album.artist.name}</p>
             <div className="flex gap-6 text-sm text-light/60 mb-6">
-              <span>{album.releaseDate}</span>
-              <span>{album.trackCount} tracks</span>
-              <span>{album.genre}</span>
-              {album.explicitLyrics && <span>Explicit</span>}
+              <span>{album.release_date}</span>
+              <span>{tracks.length} tracks</span>
             </div>
             <ViewTransitionLink
               href={`/album/${album.id}/play`}
@@ -171,7 +158,7 @@ function AlbumPageContent({ album, tracks }: { album: Album; tracks: Track[] }) 
                 </span>
                 <div className="flex-1">
                   <p className="font-medium">{track.title}</p>
-                  <p className="text-sm text-light/60">{track.artistName}</p>
+                  <p className="text-sm text-light/60">{track.artist.name}</p>
                 </div>
                 <span className="text-light/40 text-sm">
                   {Math.floor(track.duration / 60)}:
