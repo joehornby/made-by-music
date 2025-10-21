@@ -6,9 +6,9 @@ import ChartCardSkeleton from "@/app/components/chart-card-skeleton";
 import { useData } from "@/app/contexts/data-context";
 
 export default function Charts({ className }: { className?: string }) {
-  const { albums, loading, error } = useData();
+  const { playlists, loading, error } = useData();
 
-  if (loading.albums) {
+  if (loading.playlists) {
     return (
       <div
         className={cn(
@@ -23,8 +23,8 @@ export default function Charts({ className }: { className?: string }) {
       </div>
     );
   }
-  if (error.albums)
-    return <div className="text-red-500">Error: {error.albums}</div>;
+  if (error.playlists)
+    return <div className="text-red-500">Error: {error.playlists}</div>;
 
   return (
     <div
@@ -34,18 +34,19 @@ export default function Charts({ className }: { className?: string }) {
       )}
     >
       <p className="text-2xl font-bold">Top Charts</p>
-      {albums.slice(0, 3).map((album, index) => (
+      {playlists.slice(1, 4).map((playlist, index) => (
         <div
-          key={album.id}
+          key={playlist.id}
           className="fade-in w-full"
           style={{ animationDelay: `${index * 0.1}s` }}
         >
           <ChartCard
-            imageUrl={album.cover_xl}
-            title={album.title}
-            description={album.artist.name}
-            duration={0} // Albums don't have duration in the API spec
-            albumId={album.id.toString()}
+            imageUrl={playlist.cover}
+            title={playlist.title}
+            description={`${playlist.nb_tracks} tracks`}
+            duration={0} // Playlists don't have duration in the API spec
+            albumId={playlist.id}
+            type="playlist"
           />
         </div>
       ))}

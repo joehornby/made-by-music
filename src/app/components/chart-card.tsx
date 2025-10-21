@@ -18,6 +18,7 @@ export default function ChartCard({
   description,
   duration,
   albumId,
+  type = "album",
   className,
 }: {
   imageUrl: string;
@@ -25,12 +26,16 @@ export default function ChartCard({
   description: string;
   duration: number;
   albumId: string;
+  type?: "album" | "playlist";
   className?: string;
 }) {
   const [isLiked, setIsLiked] = useState(false);
+  const href =
+    type === "playlist" ? `/playlist/${albumId}` : `/album/${albumId}`;
+
   return (
     <ViewTransitionLink
-      href={`/album/${albumId}`}
+      href={href}
       className={cn(
         "cursor-pointer super-rounded-lg w-full h-auto p-4 bg-dark-alt flex items-center justify-between gap-4 hover:bg-light/5 text-left group/chart active-scale",
         className
