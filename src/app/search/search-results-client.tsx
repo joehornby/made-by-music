@@ -1,6 +1,5 @@
 "use client";
 import { useEffect, useState } from "react";
-import Image from "next/image";
 import { search, Album, Track } from "@/lib/api";
 import AlbumCard from "@/app/components/album-card";
 import { useRouter } from "next/navigation";
@@ -109,12 +108,13 @@ export default function SearchResults({ query }: SearchResultsProps) {
               >
                 <div className="flex items-center gap-3">
                   <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg flex items-center justify-center overflow-hidden">
-                    <Image
+                    <img
                       src={item.album.cover}
                       alt={item.album.title}
-                      width={48}
-                      height={48}
                       className="w-full h-full object-cover"
+                      onError={(e) => {
+                        e.currentTarget.style.display = "none";
+                      }}
                     />
                   </div>
                   <div className="flex-1 min-w-0">
