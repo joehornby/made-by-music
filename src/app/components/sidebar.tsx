@@ -19,7 +19,7 @@ export default function Sidebar({ className }: { className?: string }) {
         className
       )}
     >
-      <Link href="/">
+      <Link href="/" tabIndex={-1}>
         <div className="w-[34px] h-[34px] mb-8">
           <svg
             width={34}
@@ -43,10 +43,10 @@ export default function Sidebar({ className }: { className?: string }) {
 
       <nav className="w-full super-rounded-xl gap-8 flex flex-col">
         <div className="flex flex-col gap-8 items-center bg-dark-alt super-rounded-xl p-6">
-          <Link href="/">
+          <Link href="/" tabIndex={2} prefetch={true}>
             <HomeIcon width={24} height={24} selected={pathname === "/"} />
           </Link>
-          <Link href="/library">
+          <Link href="/library" tabIndex={3} prefetch={true}>
             <LibraryIcon
               width={24}
               height={24}
