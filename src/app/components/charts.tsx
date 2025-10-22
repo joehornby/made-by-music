@@ -33,7 +33,7 @@ export default function Charts({ className }: { className?: string }) {
         className
       )}
     >
-      <p className="text-2xl font-bold">Top Charts</p>
+      <p className="text-2xl font-bold">Top Playlists</p>
       {playlists.slice(1, 4).map((playlist, index) => (
         <div
           key={playlist.id}

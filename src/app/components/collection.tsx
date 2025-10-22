@@ -2,7 +2,7 @@
 import { cn } from "@/lib/utils";
 import AlbumCard from "@/app/components/album-card";
 import AlbumCardSkeleton from "@/app/components/album-card-skeleton";
-import { Album } from "@/types/album";
+import { Album } from "@/lib/api";
 import { useState, useRef, useEffect } from "react";
 
 interface CollectionProps {
@@ -49,7 +49,7 @@ export default function Collection({
       )}
     >
       {name && <p className="text-2xl font-bold">{name}</p>}
-      <div className="relative w-full overflow-visible">
+      <div className="relative w-full overflow-hidden">
         <div
           ref={scrollRef}
           className="flex gap-4 items-start justify-start w-full overflow-x-scroll overflow-y-visible pt-4 pb-4 scrollbar-hide"
@@ -67,11 +67,11 @@ export default function Collection({
                   style={{ animationDelay: `${index * 0.05}s` }}
                 >
                   <AlbumCard
-                    imageUrl={album.imageUrl}
+                    imageUrl={album.cover_xl}
                     albumTitle={album.title}
-                    artistName={album.artistName}
-                    albumId={album.id}
-                    playUrl={album.playUrl}
+                    artistName={album.artist.name}
+                    albumId={album.id.toString()}
+                    playUrl={`/album/${album.id}`}
                   />
                 </div>
               ))}

@@ -223,6 +223,25 @@ body {
     );
   }
 
+  .gradient-fade-b {
+    --gradient-direction: to bottom;
+    background: linear-gradient(var(--gradient-direction),
+      transparent 0%,
+      color-mix(in srgb, black 0.2%, transparent) 1.8%,
+      color-mix(in srgb, black 0.8%, transparent) 4.8%,
+      color-mix(in srgb, black 2.1%, transparent) 9%,
+      color-mix(in srgb, black 4.2%, transparent) 13.9%,
+      color-mix(in srgb, black 7.5%, transparent) 19.8%,
+      color-mix(in srgb, black 12.6%, transparent) 27%,
+      color-mix(in srgb, black 19.4%, transparent) 35%,
+      color-mix(in srgb, black 27.8%, transparent) 43.5%,
+      color-mix(in srgb, black 38.2%, transparent) 53%,
+      color-mix(in srgb, black 54.1%, transparent) 66%,
+      color-mix(in srgb, black 73.8%, transparent) 81%,
+      black 100%
+    );
+  }
+
   /* Hide scrollbar utility */
   .scrollbar-hide {
     -ms-overflow-style: none;  /* IE and Edge */
@@ -261,6 +280,19 @@ body {
       opacity: 1;
       transform: translateY(0);
     }
+  }
+
+  @keyframes marquee {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+
+  .animate-marquee {
+    animation: marquee 8s linear infinite;
   }
 }
 
