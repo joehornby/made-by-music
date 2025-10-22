@@ -6,8 +6,7 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "cdn-images.dzcdn.net",
-        port: "",
+        hostname: "made-by-music-api.vercel.app",
         pathname: "/**",
       },
       {
