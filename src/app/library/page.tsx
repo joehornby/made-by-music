@@ -1,15 +1,15 @@
 import Collections from "@/app/components/collections";
-import PageContainer from "@/app/components/page-container";
+import Charts from "@/app/components/charts";
+import BackButton from "@/app/components/back-button";
 
 export default async function Library() {
   return (
-    <PageContainer
-      backButtonHref="/"
-      backButtonText="Back to Home"
-      maxWidth="max-w-none"
-      className="grid grid-cols-4 md:grid-cols-12 gap-4"
-    >
-      <Collections />
-    </PageContainer>
+    <main className="grid grid-cols-4 md:grid-cols-12 min-h-screen gap-16 px-4 sm:px-6 lg:px-8">
+      <div className="col-span-full mb-6 md:mb-8">
+        <BackButton href="/" text="Back to Home" />
+      </div>
+      <Collections className="col-span-full" />
+      <Charts className="col-span-full md:col-span-4" />
+    </main>
   );
 }
