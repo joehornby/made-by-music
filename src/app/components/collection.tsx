@@ -2,7 +2,7 @@
 import { cn } from "@/lib/utils";
 import AlbumCard from "@/app/components/album-card";
 import AlbumCardSkeleton from "@/app/components/album-card-skeleton";
-import { Album } from "@/types/album";
+import { Album } from "@/lib/api";
 import { useState, useRef, useEffect } from "react";
 
 interface CollectionProps {
@@ -67,11 +67,11 @@ export default function Collection({
                   style={{ animationDelay: `${index * 0.05}s` }}
                 >
                   <AlbumCard
-                    imageUrl={album.imageUrl}
+                    imageUrl={album.cover_xl}
                     albumTitle={album.title}
-                    artistName={album.artistName}
-                    albumId={album.id}
-                    playUrl={album.playUrl}
+                    artistName={album.artist.name}
+                    albumId={album.id.toString()}
+                    playUrl={`/album/${album.id}`}
                   />
                 </div>
               ))}
