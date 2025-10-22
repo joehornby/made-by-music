@@ -49,7 +49,7 @@ export default function Collection({
       )}
     >
       {name && <p className="text-2xl font-bold">{name}</p>}
-      <div className="relative w-full overflow-visible">
+      <div className="relative w-full overflow-hidden">
         <div
           ref={scrollRef}
           className="flex gap-4 items-start justify-start w-full overflow-x-scroll overflow-y-visible pt-4 pb-4 scrollbar-hide"

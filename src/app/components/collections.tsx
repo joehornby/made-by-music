@@ -4,6 +4,7 @@ import Collection from "@/app/components/collection";
 import { useData } from "@/app/contexts/data-context";
 import { type Album as LegacyAlbum } from "@/types/album";
 import { type Album as ApiAlbum } from "@/lib/api";
+import { cn } from "@/lib/utils";
 
 // Transform API Album to legacy Album format
 function transformApiAlbumToLegacy(apiAlbum: ApiAlbum): LegacyAlbum {
@@ -23,21 +24,26 @@ function transformApiAlbumToLegacy(apiAlbum: ApiAlbum): LegacyAlbum {
   };
 }
 
-export default function Collections() {
+interface CollectionsProps {
+  className?: string;
+}
+
+export default function Collections({ className }: CollectionsProps) {
   const { collections, loading, error } = useData();
 
   if (error.collections)
     return <div className="text-red-500">Error: {error.collections}</div>;
 
   return (
-    <div className="flex flex-col gap-4 w-full col-span-full overflow-visible">
+    <div
+      className={cn("flex flex-col gap-4 w-full overflow-visible", className)}
+    >
       {loading.collections
         ? // Show skeleton collections while loading
           Array.from({ length: 3 }).map((_, index) => (
             <Collection
               key={`skeleton-collection-${index}`}
               name=""
-              className="col-span-full"
               albums={[]}
               isLoading={true}
             />
@@ -51,7 +57,6 @@ export default function Collections() {
             >
               <Collection
                 name={collection.title}
-                className="col-span-full"
                 albums={collection.albums.map(transformApiAlbumToLegacy)}
                 isLoading={false}
               />

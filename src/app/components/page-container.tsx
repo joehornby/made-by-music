@@ -1,6 +1,7 @@
 "use client";
 
 import BackButton from "./back-button";
+import { cn } from "@/lib/utils";
 
 interface PageContainerProps {
   children: React.ReactNode;
@@ -19,7 +20,7 @@ export default function PageContainer({
 }: PageContainerProps) {
   return (
     <div
-      className={`min-h-screen bg-dark text-light page-content-transition overflow-x-hidden ${className}`}
+      className={cn("min-h-screen bg-dark text-light page-content-transition", className)}
     >
       {/* Full-width container for back button */}
       <div className="w-full">
