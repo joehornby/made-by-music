@@ -36,6 +36,12 @@
   --super-rounded-lg: calc(theme(borderRadius.2xl) * var(--super-rounded-multiplier));
   --super-rounded-xl: calc(theme(borderRadius.4xl) * var(--super-rounded-multiplier));
   --super-rounded-default: calc(theme(borderRadius.lg) * var(--super-rounded-multiplier));
+  
+  /* Responsive rounded variables using clamp and vw */
+  --responsive-rounded-sm: clamp(0.5rem, 0.5rem + 1vw, 1.5rem);
+  --responsive-rounded-default: clamp(0.75rem, 0.75rem + 1.5vw, 2.25rem);
+  --responsive-rounded-lg: clamp(1rem, 1rem + 2vw, 3rem);
+  --responsive-rounded-xl: clamp(1.25rem, 1.25rem + 2.5vw, 3.75rem);
 
   --radius: 0.625rem;
   --background: oklch(1 0 0);
@@ -129,33 +135,33 @@ body {
 
 @layer utilities {
   .super-rounded-sm {
-    border-radius: calc(theme(borderRadius.sm) * var(--super-rounded-fallback-multiplier));
+    border-radius: var(--responsive-rounded-sm);
     @supports (corner-shape: superellipse(var(--super-ellipse-factor))) {
       corner-shape: superellipse(var(--super-ellipse-factor));
-      border-radius: var(--super-rounded-sm);
+      border-radius: var(--responsive-rounded-sm);
     }
   }
   .super-rounded-lg {
-    border-radius: calc(theme(borderRadius.lg) * var(--super-rounded-fallback-multiplier));
+    border-radius: var(--responsive-rounded-lg);
     @supports (corner-shape: superellipse(var(--super-ellipse-factor))) {
       corner-shape: superellipse(var(--super-ellipse-factor));
-      border-radius: var(--super-rounded-lg);
+      border-radius: var(--responsive-rounded-lg);
     }
   }
   .super-rounded-xl {
-    border-radius: calc(theme(borderRadius.xl) * var(--super-rounded-fallback-multiplier));
+    border-radius: var(--responsive-rounded-xl);
     @supports (corner-shape: superellipse(var(--super-ellipse-factor))) {
       corner-shape: superellipse(var(--super-ellipse-factor));
-      border-radius: var(--super-rounded-xl);
+      border-radius: var(--responsive-rounded-xl);
     }
   }
 
   /* Default */
   .super-rounded {
-    border-radius: calc(theme(borderRadius.DEFAULT) * var(--super-rounded-fallback-multiplier));
+    border-radius: var(--responsive-rounded-default);
     @supports (corner-shape: superellipse(var(--super-ellipse-factor))) {
       corner-shape: superellipse(var(--super-ellipse-factor));
-      border-radius: var(--super-rounded-default);
+      border-radius: var(--responsive-rounded-default);
     }
   }
 
