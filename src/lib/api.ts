@@ -71,7 +71,10 @@ async function handleResponse<T>(response: Response): Promise<T> {
 
 // API Helper Functions
 export async function getAlbums(): Promise<PaginatedResponse<Album>> {
-  const response = await fetch(`${API_BASE_URL}/albums`, { cache: "no-store" });
+  const response = await fetch(`${API_BASE_URL}/albums`, {
+    cache: "force-cache",
+    next: { revalidate: false }, // Data never changes
+  });
   return handleResponse<PaginatedResponse<Album>>(response);
 }
 
@@ -81,7 +84,10 @@ export async function getAlbum(id: number): Promise<Album> {
 }
 
 export async function getAlbumWithTracks(id: number): Promise<AlbumWithTracks> {
-  const response = await fetch(`${API_BASE_URL}/albums/${id}?expand=tracks`, { cache: "no-store" });
+  const response = await fetch(`${API_BASE_URL}/albums/${id}?expand=tracks`, {
+    cache: "force-cache",
+    next: { revalidate: false }, // Data never changes
+  });
   return handleResponse<AlbumWithTracks>(response);
 }
 
@@ -149,5 +155,5 @@ export async function search(query: string): Promise<PaginatedResponse<Album | T
 }
 
 export function getStreamUrl(trackId: number): string {
-  return `${API_BASE_URL}/stream/${trackId}`;
+  return `/api/audio/track-${trackId}.mp3`;
 }
