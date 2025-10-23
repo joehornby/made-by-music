@@ -15,7 +15,7 @@ export default function Sidebar({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        "super-rounded-xl w-full h-[calc(100vh-32px)] sticky top-4 flex flex-col items-center py-4 px-4 z-50 hidden md:flex",
+        "super-rounded-xl w-full h-[calc(100vh-32px)] sticky top-4 flex-col items-center py-4 px-4 z-50 hidden md:flex",
         className
       )}
     >
