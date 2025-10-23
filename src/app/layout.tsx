@@ -35,7 +35,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={acidGrotesk.className}>
       <body
-        className={`${acidGrotesk.variable} ${geistMono.variable} antialiased bg-dark text-light grid grid-cols-[0_1fr] md:grid-cols-[96px_1fr] grid-rows-[72px_auto] p-4 gap-4`}
+        className={`${acidGrotesk.variable} ${geistMono.variable} antialiased bg-dark text-light grid grid-cols-[0_1fr] md:grid-cols-[96px_1fr] grid-rows-[72px_auto] p-4 md:pr-7 gap-4`}
       >
         <DataProvider>
           <PlaybackProvider>

@@ -15,12 +15,12 @@ export default function Sidebar({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        "super-rounded-xl w-full h-[calc(100vh-32px)] sticky top-4 flex flex-col items-center py-4 px-4 z-50 hidden md:flex",
+        "super-rounded-xl w-full h-[calc(100vh-32px)] sticky top-4 flex-col items-center py-4 px-4 z-50 hidden md:flex",
         className
       )}
     >
       <Link href="/" tabIndex={-1}>
-        <div className="w-[34px] h-[34px] mb-8">
+        <div className="w-[34px] h-[34px] mb-9">
           <svg
             width={34}
             height={34}
