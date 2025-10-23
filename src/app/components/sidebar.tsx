@@ -41,7 +41,7 @@ export default function Sidebar({ className }: { className?: string }) {
         </div>
       </Link>
 
-      <nav className="w-full super-rounded-xl gap-8 flex flex-col">
+      <nav className="w-full super-rounded-xl gap-8 flex flex-col justify-between h-[calc(100%-164px)] nav-container-short">
         <div className="flex flex-col gap-8 items-center bg-dark-alt super-rounded-xl p-6">
           <Link href="/" tabIndex={2} prefetch={true}>
             <HomeIcon width={24} height={24} selected={pathname === "/"} />
@@ -54,7 +54,7 @@ export default function Sidebar({ className }: { className?: string }) {
             />
           </Link>
         </div>
-        <div className="flex flex-col gap-8 items-center bg-dark-alt super-rounded-xl p-6">
+        <div className="flex flex-col gap-8 items-center bg-dark-alt super-rounded-xl p-6 short-screen-hidden">
           <UserIcon width={24} height={24} />
           <LogoutIcon width={24} height={24} />
         </div>
