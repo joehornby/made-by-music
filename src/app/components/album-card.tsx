@@ -2,8 +2,8 @@
 
 import { cn } from "@/lib/utils";
 import Image from "next/image";
+import Link from "next/link";
 import { AlbumCardProps } from "@/types/album";
-import ViewTransitionLink from "@/app/components/view-transition-link";
 
 export default function AlbumCard({
   className,
@@ -14,7 +14,7 @@ export default function AlbumCard({
   playUrl,
 }: AlbumCardProps) {
   return (
-    <ViewTransitionLink
+    <Link
       href={playUrl || `/album/${albumId}`}
       className={cn(
         "flex flex-col gap-4 items-start group cursor-pointer w-38 active-scale",
@@ -38,6 +38,6 @@ export default function AlbumCard({
           {artistName}
         </p>
       </div>
-    </ViewTransitionLink>
+    </Link>
   );
 }

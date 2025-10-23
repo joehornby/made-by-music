@@ -48,7 +48,11 @@ export default function Collection({
         className
       )}
     >
-      {name && <p className="text-2xl font-bold">{name}</p>}
+      {isLoading ? (
+        <div className="h-8 skeleton rounded w-48" />
+      ) : (
+        name && <p className="text-2xl font-bold">{name}</p>
+      )}
       <div className="relative w-full overflow-hidden">
         <div
           ref={scrollRef}

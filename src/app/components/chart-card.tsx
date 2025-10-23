@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { useState } from "react";
 import Heart from "@/app/components/heart";
-import ViewTransitionLink from "@/app/components/view-transition-link";
+import Link from "next/link";
 
 const formatDuration = (duration: number) => {
   const date = new Date();
@@ -34,7 +34,7 @@ export default function ChartCard({
     type === "playlist" ? `/playlist/${albumId}` : `/album/${albumId}`;
 
   return (
-    <ViewTransitionLink
+    <Link
       href={href}
       className={cn(
         "cursor-pointer super-rounded-lg w-full h-auto p-4 bg-dark-alt flex items-center justify-between gap-4 hover:bg-light/5 text-left group/chart active-scale",
@@ -60,6 +60,6 @@ export default function ChartCard({
         onToggle={setIsLiked}
         className="flex-shrink-0"
       />
-    </ViewTransitionLink>
+    </Link>
   );
 }
