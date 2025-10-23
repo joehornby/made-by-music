@@ -20,7 +20,7 @@ export default function Sidebar({ className }: { className?: string }) {
       )}
     >
       <Link href="/" tabIndex={-1}>
-        <div className="w-[34px] h-[34px] mb-8">
+        <div className="w-[34px] h-[34px] mb-9">
           <svg
             width={34}
             height={34}
