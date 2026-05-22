@@ -59,7 +59,7 @@ function AlbumPageContent({
             sizes="256px"
           />
         </div>
-        <div className="flex-1 text-center md:text-left w-full">
+        <div className="flex-1 text-center md:text-left w-full min-w-0">
           <h1 className="text-2xl md:text-5xl font-bold mb-4 break-words">
             {album.title}
           </h1>
